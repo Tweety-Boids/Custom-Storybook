@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run serve",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "concurrently \"npm install\" \"cd client && npm install\" \"cd server && npm install\"",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}
