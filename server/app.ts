@@ -1,7 +1,7 @@
 import express, { ErrorRequestHandler } from 'express';
-import apiRouter from './routes/apiRouter';
+import { apiRouter } from './routes/apiRouter.js';
 
-import { ServerError } from './types/types.js';
+import { ServerError } from '../types/types.js';
 import path from 'path'; // provides utilities for working with file and directory paths
 import { fileURLToPath } from 'url'; //* build the dirname manually due to es6 restrictions
 
@@ -35,9 +35,9 @@ const errorHandler: ErrorRequestHandler = (
     res.status(errorObj.status).json(errorObj.message);
 }
 
-app.use((req, res) =>
-    res.status(404).send('This is not the page you\re looking for.')
-); // catch all error handler
+app.use((req, res) =>{
+    res.status(404).send('This is not the page you\re looking for.');
+}); // catch all error handler
 
 app.use(errorHandler);
 
