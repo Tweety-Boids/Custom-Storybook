@@ -1,5 +1,30 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+/* CLEAR DEFAULT HTML TAG STYLING */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove list styles */
+ul, ol {
+  list-style: none; /* Removes bullet points and numbering */
+}
+
+/* Remove default image styling */
+img {
+  max-width: 100%; /* Ensures images are responsive */
+  height: auto; /* Maintains aspect ratio */
+}
+
+/* Remove default button styling */
+button {
+  background: none; /* Removes default background */
+  border: none; /* Removes default border */
+  cursor: pointer; /* Changes cursor to pointer */
+}
+
+/* :root {
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,7 +36,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} 
 
 a {
   font-weight: 500;
@@ -20,14 +45,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -66,3 +83,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+*/
