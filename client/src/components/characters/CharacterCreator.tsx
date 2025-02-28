@@ -6,7 +6,8 @@ const CharacterCreator = () => {
       <>
         <h1>--CHARACTER CREATOR--</h1>
         <div className="character-creator-wrapper">
-          
+          <TextInput />
+          <TextInput />
           <Dropdown />
           <Dropdown />
           <Dropdown />
