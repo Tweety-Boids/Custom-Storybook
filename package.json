@@ -17,6 +17,7 @@
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@pinecone-database/pinecone": "^5.1.0",
     "prettier": "^3.5.2",
     "prettier-plugin-tailwindcss": "^0.6.11"
   }
