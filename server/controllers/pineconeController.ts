@@ -25,11 +25,11 @@ const generatePineconeRecords = (
   embeddingsData: EmbeddingData[]
 ): PineconeRecord<StoryMetadata>[] => {
   const pineconeRecords: PineconeRecord<StoryMetadata>[] = [];
-  for (const { movie, embedding } of embeddingsData) {
+  for (const { story, embedding } of embeddingsData) {
     pineconeRecords.push({
-      id: movie.id,
+      id: story.id,
       values: embedding,
-      metadata: movie,
+      metadata: story,
     });
   }
   return pineconeRecords;
@@ -94,7 +94,7 @@ const upsertBatchesToPicone = async (
             genre: 'horror',
             author: 'Sylvester the cat'
         }
-        
+
         const placeholderOAIEmbed = [-2,-1,0,1,2]
 
         const placeholderFullEmbed: EmbeddingData = {
