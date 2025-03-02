@@ -1,5 +1,6 @@
-import express, { ErrorRequestHandler } from 'express';
+import express, { ErrorRequestHandler, Request, Response} from 'express';
 import { apiRouter } from './routes/apiRouter.js';
+
 
 import { ServerError } from '../types/types.js';
 import path from 'path'; // provides utilities for working with file and directory paths
@@ -16,7 +17,11 @@ app.use(express.urlencoded({ extended: true })); // recognizes request object as
 app.use(express.static(path.resolve(__dirname, '../src/assets'))); // geneerating static files
 
 
+app.get('/test', (req:Request, res:Response): any => {
+    console.log ('We are in the test route');
+    return res.status(200).send();
 
+})
 app.use('/api', apiRouter);
 
 const errorHandler: ErrorRequestHandler = (
