@@ -8,7 +8,7 @@
 
 import { createContext, useReducer, useEffect } from "react";
 import { produce } from "immer";
-import * as api from "../utils/apiFetch";
+import { getBooks } from "../actions/bookActions";
 // define DISPATCH ACTIONS
 interface ActionTypes {
   TOGGLE_STORY_PANEL: string;
@@ -69,6 +69,7 @@ const reducer = (
         draft.showStoryPanel = action.payload;
         break;
       case ActionTypes.GET_BOOKS:
+        console.log("FETCHED BOOKS", action.payload);
         draft.bookList = action.payload;
         break;
       case ActionTypes.GET_CHARACTERS:
@@ -96,8 +97,9 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   // populate state on initial render
   useEffect(() => {
-    api.getBooks();
-    api.getCharacters();
+    // fetch books and characters
+
+    getBooks()(dispatch);
   }, []);
 
   return (
