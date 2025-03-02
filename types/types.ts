@@ -1,8 +1,8 @@
 export type ServerError = {
     log: string;
     status: number;
-    message: { err: string };
-  };
+    message: { err: string };};
+
 
 export type ServerApi = {
     version: "1";
@@ -18,3 +18,13 @@ export interface UserPreferenceBody {
   genre: string;
   setting: string;
 }
+
+
+export type StoryMetadata = {
+  id: string;
+  title: string;
+  story: string;
+  characters: string[];
+  genre: string;
+  author: string;
+};

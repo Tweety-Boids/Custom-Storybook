@@ -7,9 +7,11 @@
   },
   "dependencies": {
     "concurrently": "^9.1.2",
+    "immer": "^10.1.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@pinecone-database/pinecone": "^5.1.0",
     "prettier": "^3.5.2",
     "prettier-plugin-tailwindcss": "^0.6.11"
   }
