@@ -23,9 +23,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "mongoose": "^8.11.0",
     "nodemon": "^3.1.9",
     "openai": "^4.85.4",
     "path": "^0.12.7",
+    "tsc": "^2.0.4",
     "url": "^0.11.4"
   },
   "devDependencies": {
