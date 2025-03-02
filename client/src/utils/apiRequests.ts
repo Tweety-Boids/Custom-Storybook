@@ -2,8 +2,8 @@ import { createBookRequest, createCharacterRequest } from "../types/types";
 const API_URL = "http://localhost:3000/api";
 
 // interface ApiRequests {
-//   getBooks: () => Promise<any>;
-//   getBook: () => Promise<any>; // id on body or param??
+//   fetchBooks: () => Promise<any>;
+//   fetchBook: () => Promise<any>; // id on body or param??
 //   createBook: (bookDetails: createBookReqest) => Promise<any>;
 
 //   getCharacters: () => Promise<any>;
@@ -11,20 +11,23 @@ const API_URL = "http://localhost:3000/api";
 //   editCharacter: () => Promise<any>;
 // }
 
-const getBooks = async (): Promise<any> => {
+const fetchBooks = async (): Promise<any> => {
   try {
     const response = await fetch(`${API_URL}/books`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
+    // console.log('DATA: fetchBooks: ', data);
+    if (data) {
+    }
     return data;
   } catch (err) {
-    console.error(`ERROR: getBooks: ${err}`);
+    console.error(`ERROR: fetchBooks: ${err}`);
   }
 };
 
-const getBook = async (): Promise<any> => {
+const fetchBook = async (): Promise<any> => {
   try {
     const response = await fetch(`${API_URL}/books`);
     if (!response.ok) {
@@ -33,7 +36,7 @@ const getBook = async (): Promise<any> => {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.error(`ERROR: getBook: ${err}`);
+    console.error(`ERROR: fetchBook: ${err}`);
   }
 };
 
@@ -105,8 +108,8 @@ const editCharacter = async (): Promise<any> => {
 };
 
 export {
-  getBooks,
-  getBook,
+  fetchBooks,
+  fetchBook,
   createBook,
   getCharacters,
   createCharacter,
