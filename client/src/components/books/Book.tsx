@@ -1,10 +1,10 @@
-const Book = () => {
+const Book = ({title}) => {
   return (
     <>
       <div className="book-wrapper">
-        <h1>--BOOK--</h1>
+        {/* <h1>--BOOK--</h1> */}
         <div className='book-img-wrapper'>**img**</div>
-        <h1>Title</h1>
+        <h1>{title}</h1>
         </div>
     </>
   );

@@ -1,26 +1,26 @@
 {
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "target": "ES2017",
+    "allowJs": true,
+    "jsx": "react",
+    "skipLibCheck": true
+  },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
     "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "strict": true,
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "module": "esnext",
-      "moduleResolution": "bundler",
-      "allowImportingTsExtensions": true,
-      "noEmit": true,
-      "target": "ES2017",
-      "allowJs": true,
-      "jsx": "react",
-      "skipLibCheck": true
-    },
-    "ts-node": {
-      "esm": true,
-      "transpileOnly": true,
-      "compilerOptions": {
-        "moduleResolution": "node"
-      }
-    },
+      "moduleResolution": "node"
+    }
+  },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

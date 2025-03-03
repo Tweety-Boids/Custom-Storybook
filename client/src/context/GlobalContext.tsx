@@ -8,7 +8,7 @@
 
 import { createContext, useReducer, useEffect } from "react";
 import { produce } from "immer";
-
+import { getBooks } from "../actions/bookActions";
 // define DISPATCH ACTIONS
 interface ActionTypes {
   TOGGLE_STORY_PANEL: string;
@@ -68,6 +68,13 @@ const reducer = (
       case ActionTypes.TOGGLE_STORY_PANEL:
         draft.showStoryPanel = action.payload;
         break;
+      case ActionTypes.GET_BOOKS:
+        console.log("FETCHED BOOKS", action.payload);
+        draft.bookList = action.payload;
+        break;
+      case ActionTypes.GET_CHARACTERS:
+        draft.characterList = action.payload;
+        break;
       // default case if action.type doesn't match any case
       default:
         break;
@@ -89,6 +96,11 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   // extract state and dispatch from useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
   // populate state on initial render
+  useEffect(() => {
+    // fetch books and characters
+
+    getBooks()(dispatch);
+  }, []);
 
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>

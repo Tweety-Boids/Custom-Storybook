@@ -10,6 +10,9 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url); //*recreate dirname for ES6 modules
 const __dirname = path.dirname(__filename);
 
+import cors from 'cors';
+app.use(cors());
+
 app.use(express.json()); // converts request object as json
 app.use(express.urlencoded({ extended: true })); // recognizes request object as strings or arrays
 app.use(express.static(path.resolve(__dirname, '../src/assets'))); // geneerating static files
