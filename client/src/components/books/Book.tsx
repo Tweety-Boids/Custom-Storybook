@@ -6,9 +6,9 @@ const Book = ({ title }: BookProps) => {
   return (
     <>
       <div className="book-wrapper">
-        {/* <h1>--BOOK--</h1> */}
+        {/* <h3>--BOOK--</h3> */}
         <div className="book-img-wrapper">**img**</div>
-        <h1>{title}</h1>
+        <h3>{title}</h3>
       </div>
     </>
   );

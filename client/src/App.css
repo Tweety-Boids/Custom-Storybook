@@ -12,18 +12,20 @@ body {
   /* make sticky */
 }
 
-.story-panel-wrapper {
-  border: 1px solid orange;
-  background-color: orange;
-  position: absolute;
-  width: 500px;
-  height: 100vh;
-}
-
 .main-div-wrapper {
   border: 1px solid yellow;
   height: 100vh;
+  display: flex;
 }
+
+.story-panel-wrapper {
+  border: 1px solid orange;
+  background-color: orange;
+  /* position: absolute; */
+  width: 350px;
+  height: 100vh;
+}
+
 
 .main-book-list-wrapper {
   border: 1px solid green;
@@ -34,13 +36,17 @@ body {
 
 .book-list-wrapper {
   display: flex;
-  gap: 50px
+  gap: 50px;
+  padding: 20px;
 }
 
 .book-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
+
 
 .book-img-wrapper {
   border: 1px solid blue;

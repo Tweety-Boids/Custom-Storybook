@@ -8,7 +8,7 @@ const TextInput = ({label}:TextInputProps) => {
   const [userInput, setUserInput] = useState('')
     return (
       <>
-        {/* <h1>--TEXT INPUT</h1> */}
+        {/* <h3>--TEXT INPUT</h3> */}
         <div>
         <div>{label}: <input type='text' value={userInput} onChange={e => setUserInput(e.target.value)}/>
         </div>
