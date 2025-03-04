@@ -1,15 +1,23 @@
 // ??? what type is character? an id?
 interface createBookRequest {
   title: string;
-  art_style: string;
   author: string;
-  character: string;
+  setting: string; // ?? coffee shop vs Seattle
+  plot: string;
+  character: string; // array of characters
+  artStyle: string; 
   genre: string;
-  setting: string;
 }
 
 interface createCharacterRequest {
-    name: string
+  // confirm with Jeremy
+  name: string;
+  pronouns: string; //drop down to other
+  catchPhrase: string;
+  specialTalent: string;
+  // physical attributes
+  hairColor: string;
+  eyeColor: string;
 }
 
 export type { createBookRequest, createCharacterRequest };
