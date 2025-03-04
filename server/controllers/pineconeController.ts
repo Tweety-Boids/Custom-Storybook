@@ -3,6 +3,7 @@ import { ServerError, StoryMetadata } from '../../types/types';
 import { Pinecone, PineconeRecord } from '@pinecone-database/pinecone';
 import 'dotenv/config';
 import OpenAI from 'openai';
+import { Embeddings } from 'openai/resources/embeddings.mjs';
 
 const pc = new Pinecone({
   apiKey: `${process.env.PINECONE_API_KEY}`
@@ -15,10 +16,12 @@ interface EmbeddingData {
 
 
 export const upsertDataToPinecone: RequestHandler = async(_req, res, next) => {
+    //res locals embedding and story from OAI
+    const {embedding, metadata} = res.locals;
     const pinecone = new Pinecone();
-    const index = pinecone.index<StoryMetadata>('movies');
+    const index = pinecone.index<StoryMetadata>('stories');
 
-
+    //TODO: Fix this in order to upsert embedded books vvv
     /**
      * Generate Pinecone records from embeddings data.
      */
@@ -26,7 +29,7 @@ export const upsertDataToPinecone: RequestHandler = async(_req, res, next) => {
     embeddingsData: EmbeddingData[]
     ): PineconeRecord<StoryMetadata>[] => {
     const pineconeRecords: PineconeRecord<StoryMetadata>[] = [];
-    for (const { story, embedding } of embeddingsData) {
+    for (const { metadata, embedding } of embeddingsData) {
         pineconeRecords.push({
         id: story.id,
         values: embedding,
