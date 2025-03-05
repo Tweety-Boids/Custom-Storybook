@@ -28,7 +28,7 @@ const PromptStore = {
   hug: 'you are an expert animator, you will be recieving two characters, you will output an image in the exact same art style, the backgroung will be a school, the two characters are holding hands. you will priortitize keeping the characters looking the same, and deprioritize them being in the same positon',
   monsters: 'a silly monster with red hair and a silly horned monster with blue fur are shaking hands at their school',
   background: 'change the background to be a British School',
-  test: "A highly detailed, photorealistic full-body portrait of a young man standing in a lush green park during daytime. He has medium-length, wavy dark brown hair that falls naturally around his face with a slightly tousled look. His deep brown eyes are framed by thick, well-defined eyebrows, and his facial structure is sharp and symmetrical, with high cheekbones, a straight nose, and a strong yet refined jawline. His full lips are slightly parted, and he has light stubble on his chin, upper lip, and along his jawline, adding a touch of ruggedness to his smooth, fair complexion.He is wearing a simple, fitted white T-shirt and casual dark jeans, paired with comfortable sneakers. His posture is relaxed, with his hands casually in his pockets (or arms crossed, depending on preference), and he gazes into the distance with a calm and introspective demeanor. The camera captures his entire figure, ensuring a full-body composition with a straight-on or slightly low-angle shot for a dynamic perspective.The park around him is filled with lush green grass, tall leafy trees, and warm sunlight filtering through the branches, casting a dappled glow on the scene. A few park benches and people enjoying a peaceful afternoon are visible in the background, slightly blurred to maintain focus on the subject. The atmosphere is tranquil, with a soft breeze subtly moving his hair and clothes.",
+  // test: `generate a book cover of the following JSON object: ${res.locals.userQuery}`,
   perk: `The cozy Central Perk café is filled with holiday decorations, warm lighting, and a light snowfall visible through the windows. Chandler, ${characters.chandler}, is sprawled on the couch, rolling his eyes while Phoebe, ${characters.phoebe}, passionately sings an original Christmas song. Ross, ${characters.ross}, bundled in a puffy jacket, gestures dramatically as he recounts a ridiculous paleontology discovery. Monica, ${characters.monica}, is decorating cookies with laser-like focus, while Rachel, ${characters.rachel}, is attempting (and failing) to wrap a gift. Joey, ${characters.joey} wearing a Santa hat, grins as he flirts with a barista, clearly improvising a pickup line. you must include all characters referenced.`,
  
 
@@ -40,11 +40,14 @@ const stabilityController = {
   async generateText2Image(req, res, next) {
 
     try {
+
       const payload = {
-          prompt: PromptStore.perk, //perameratize the prompt here
+          prompt: `a book cover for a story with the plot summary: ${res.locals.userQuery.plot}` ,
           output_format: "jpeg",
           aspect_ratio: "9:16",
       };
+
+      console.log("IMAGE PROMPT: ", payload);
 
       const response = await axios.postForm(
         `https://api.stability.ai/v2beta/stable-image/generate/sd3`,
@@ -59,9 +62,13 @@ const stabilityController = {
         },
       );
       if(response.status === 200) {
-        fs.writeFileSync("./bookcover.jpeg", Buffer.from(response.data));
-        console.log (response.status, "we have finished the response");
-        
+        fs.writeFileSync(`./${res.locals.userQuery.title}.jpeg`, Buffer.from(response.data));
+        console.log (response.status, "we have finished generating the image");
+
+        res.locals.userQuery.img_id = `${res.locals.userQuery.title}.jpeg`;
+        console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
+
+        next();
         // res.locals.image = Buffer.from(response.data);
 
       } else {
