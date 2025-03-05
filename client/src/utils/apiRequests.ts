@@ -18,7 +18,7 @@ const fetchBooks = async (): Promise<any> => {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
-    // console.log('DATA: fetchBooks: ', data);
+    console.log("DATA: fetchBooks: ", data);
     if (data) {
     }
     return data;
@@ -27,13 +27,14 @@ const fetchBooks = async (): Promise<any> => {
   }
 };
 
-const fetchBook = async (): Promise<any> => {
+const fetchBook = async (id: number): Promise<any> => {
   try {
-    const response = await fetch(`${API_URL}/books`);
+    const response = await fetch(`${API_URL}/books/${id}`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
+    console.log("DATA: fetchBook: ", data);
     return data;
   } catch (err) {
     console.error(`ERROR: fetchBook: ${err}`);
@@ -53,7 +54,7 @@ const createBook = async (bookDetails: createBookRequest): Promise<any> => {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
-    console.log("createChore: ", data);
+    console.log("createBok: ", data);
     return data;
   } catch (err) {
     console.error(`ERROR: createBook: ${err}`);
@@ -67,6 +68,7 @@ const getCharacters = async (): Promise<any> => {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
+    console.log("DATA: getCharacters: ", data);
     return data;
   } catch (err) {
     console.error(`ERROR: getCharacters: ${err}`);
@@ -88,6 +90,7 @@ const createCharacter = async (
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
+    console.log("DATA: createCharacter: ", data);
     return data;
   } catch (err) {
     console.error(`ERROR: createCharacter: ${err}`);

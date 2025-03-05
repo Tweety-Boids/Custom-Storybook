@@ -13,8 +13,12 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
-      <h1>--HEADER--</h1>
-      <button onClick={toggleStoryPanel}>Toggle Story Panel</button>
+      <h3>--HEADER--</h3>
+      <div>
+        Search library: <input type="text" />
+      </div>
+      {/* <button onClick={toggleStoryPanel}>Toggle Story Panel</button>
+      <button onClick={toggleStoryPanel}>Toggle Story Panel</button> */}
     </div>
   );
 };

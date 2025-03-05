@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon --exec 'node --loader ts-node/esm' ./server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +18,7 @@
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@pinecone-database/pinecone": "^5.1.0",
+    "axios": "^1.8.1",
     "babel-jest": "^29.7.0",
     "babel-loader": "^10.0.0",
     "concurrently": "^9.1.2",
