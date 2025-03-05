@@ -69,7 +69,7 @@ const reducer = (
         draft.showStoryPanel = action.payload;
         break;
       case ActionTypes.GET_BOOKS:
-        console.log("FETCHED BOOKS", action.payload);
+        // console.log("FETCHED BOOKS", action.payload);
         draft.bookList = action.payload;
         break;
       case ActionTypes.GET_CHARACTERS:

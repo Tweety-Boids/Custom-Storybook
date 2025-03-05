@@ -1,9 +1,25 @@
+button {
+  color: white;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: blue;
+}
+
+.dev-panel-wrapper {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
 /* LAYOUT POSITIONING */
 body {
   background-color: #242424;
   color: rgba(255, 255, 255, 0.87);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  height:100vh
+  height: 100vh;
 }
 
 .header-wrapper {
@@ -12,16 +28,17 @@ body {
   /* make sticky */
 }
 
+.main-div-wrapper {
+  border: 1px solid yellow;
+  height: 100vh;
+  display: flex;
+}
+
 .story-panel-wrapper {
   border: 1px solid orange;
   background-color: orange;
-  position: absolute;
-  width: 500px;
-  height: 100vh;
-}
-
-.main-div-wrapper {
-  border: 1px solid yellow;
+  /* position: absolute; */
+  width: 350px;
   height: 100vh;
 }
 
@@ -34,12 +51,15 @@ body {
 
 .book-list-wrapper {
   display: flex;
-  gap: 50px
+  gap: 50px;
+  padding: 20px;
 }
 
 .book-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .book-img-wrapper {
@@ -49,4 +69,3 @@ body {
   display: flex;
   flex-direction: column;
 }
-

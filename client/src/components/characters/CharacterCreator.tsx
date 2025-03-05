@@ -1,36 +1,23 @@
-import Dropdown from '../ui/Dropdown'
-import TextInput from '../ui/TextInput'
+import Dropdown from "../ui/Dropdown";
+import TextInput from "../ui/TextInput";
+import * as optionList from "../ui/dropdownOptions";
 
 const CharacterCreator = () => {
-// define DropDown options 
-  const hairColors = {
-    black: 'Black', 
-    brown:'Brown', 
-    blonde:'Blonde', 
-    red:'Red', 
-    grey:'Grey', 
-  }
+  return (
+    <>
+      <h3>--CHARACTER CREATOR--</h3>
+      <div className="character-creator-wrapper">
+        <TextInput label="Name" />
+        <Dropdown label="Pronouns" options={optionList.pronouns} />
+        <TextInput label="Catch Phrase" />
+        <TextInput label="Personality" />
+        <TextInput label="Special Talent" />
+        <Dropdown label="Hair Color" options={optionList.hairColors} />
+        <Dropdown label="Eye Color" options={optionList.eyeColors} />
+        <TextInput label="Physical Description" />
+      </div>
+    </>
+  );
+};
 
-  const eyeColors = {
-    blue: 'Blue', 
-    black: 'Black', 
-    brown:'Brown', 
-    Green:'Green', 
-  }
-
-    return (
-      <>
-        <h1>--CHARACTER CREATOR--</h1>
-        <div className="character-creator-wrapper">
-          <TextInput label='Name'/>
-          <TextInput label="Catch Phrase"/>
-          <TextInput label="Special Talent"/>
-          <Dropdown label="Hair Color" optionList={hairColors}/>
-          <Dropdown label="Eye Color" optionList={eyeColors}/>
-        </div>
-      </>
-    );
-  };
-  
-  export default CharacterCreator;
-  
+export default CharacterCreator;

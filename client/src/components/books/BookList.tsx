@@ -11,7 +11,7 @@ const BookList = () => {
 
   return (
     <>
-      <h1>--BOOK LIST--</h1>
+      {/* <h3>--BOOK LIST--</h3> */}
       <div className="book-list-wrapper">
         {bookList &&
           bookList.map((book) => {

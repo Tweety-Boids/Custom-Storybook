@@ -12,7 +12,7 @@ const StoryPanel = () => {
 
   return (
     <div className="story-panel-wrapper">
-      <h1>--STORY PANEL--</h1>
+      {/* <h3>--STORY PANEL--</h3> */}
       <BookCreator />
       <CharacterCreator />
       <CharacterList />

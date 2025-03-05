@@ -4,26 +4,30 @@ interface OptionList {
 
 interface DropdownProps {
   label: string
-  optionList: OptionList
+  options: any[]
 }
-const Dropdown = ({label, optionList}: DropdownProps) => {
-  const generateTypeLabel = (label:string) :string => {
-    let type:string[] = label.split(' ')
-    type[0] = type[0].toLowerCase()
-    return type.join("")
+const Dropdown = ({label, options}: DropdownProps) => {
+  const generateDropdownName = (label:string) :string => {
+    let name:string[] = label.split(' ')
+    name[0] = name[0].toLowerCase()
+    return name.join("")
   }
 
-  const labelType: string = generateTypeLabel(label)
+  const dropdownName: string = generateDropdownName(label)
 
   return (
     <>
-      {/* <h1>--DROP DOWN</h1> */}
+      {/* <h3>--DROP DOWN</h3> */}
       <div>
-        <label htmlFor={labelType}>{label}: </label>
-        <select name={labelType} id={labelType}>
-        {optionList && Object.entries(optionList).map((option)=>{
+        <label htmlFor={dropdownName}>{label}: </label>
+        <select name={dropdownName} id={dropdownName}>
+        {/* {options && Object.entries(options).map((option)=>{
           return <option key={option[0]} value={option[0]}>{option[1]}</option>
 
+        })} */}
+
+        {options && options.map((option, index) => {
+          return <option key={index} value={option.value}>{option.label}</option>
         })}
         </select>
       </div>

@@ -1,12 +1,16 @@
-import BookList from '../books/BookList'
+import BookList from "../books/BookList";
+import StoryPanel from "./StoryPanel";
 
 const MainDiv = () => {
   return (
-    <div className='main-div-wrapper'>
-      <h1>--MAIN-DIV--</h1>
-      <BookList />
-    </div>
-  )
-}
+    <>
+      {/* <h3>--MAIN-DIV--</h3> */}
+      <div className="main-div-wrapper">
+        <StoryPanel />
+        <BookList />
+      </div>
+    </>
+  );
+};
 
-export default MainDiv
+export default MainDiv;
