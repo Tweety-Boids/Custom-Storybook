@@ -17,6 +17,8 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
+    "@pinecone-database/pinecone": "^5.1.0",
+    "babel-jest": "^29.7.0",
     "babel-loader": "^10.0.0",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
@@ -30,6 +32,8 @@
     "url": "^0.11.4"
   },
   "devDependencies": {
+    "@pinecone-database/pinecone": "^5.1.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "ts-node": "^10.9.2"
   }
