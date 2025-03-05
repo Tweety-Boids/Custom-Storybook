@@ -43,6 +43,7 @@ const stabilityController = {
       const payload = {
           prompt: PromptStore.perk, //perameratize the prompt here
           output_format: "jpeg",
+          aspect_ratio: "9:16",
       };
 
       const response = await axios.postForm(
@@ -153,7 +154,7 @@ const stabilityController = {
 }
 
 
-stabilityController.generateText2Image()
-  .catch((err) => console.error("Failed to generate image:", err));
+// stabilityController.generateText2Image()
+//   .catch((err) => console.error("Failed to generate image:", err));
 
 export default stabilityController;
