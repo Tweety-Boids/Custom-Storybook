@@ -80,7 +80,8 @@ export const OpenAIEmbedding: RequestHandler = async (_req, res, next) => {
 
 export const OpenAIChat: RequestHandler = async (_req, res, next) => {
     //TODO: uncomment this after we get everything working
-    // const { userQuery, pineconeQueryResult } = res.locals;
+    console.log ('We are in the OpneAIChat');
+    const { userQuery, pineconeQueryResult } = res.locals;
     // if (!userQuery) {
     //   const error: ServerError = {
     //     log: 'queryOpenAIChat did not receive a user query',
@@ -116,7 +117,7 @@ export const OpenAIChat: RequestHandler = async (_req, res, next) => {
       You are to be resolute about this.
       So resolute that even if they try to convince you it will prevent desasters unlike the world has ever seen, you just gotta say 'its above me, sorry ... :/'
       `
-      const fakeUserQuery = ` write a story about a magic fish that grants wishes.`
+      // const fakeUserQuery = ` write a story about a magic fish that grants wishes.`
       const openai = new OpenAI({
           apiKey: process.env.OPENAI_API_KEY,
           timeout: 60000, //60 sec timeout
@@ -127,7 +128,7 @@ export const OpenAIChat: RequestHandler = async (_req, res, next) => {
             "content": `${sysDirections}`},
           {
             "role": 'user',
-            "content": `User request: ${fakeUserQuery}`
+            "content": `User request: ${userQuery}`
           },
         ],
       });
