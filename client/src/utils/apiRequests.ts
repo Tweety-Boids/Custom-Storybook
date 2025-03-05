@@ -29,6 +29,7 @@ const fetchBooks = async (): Promise<any> => {
 
 const fetchBook = async (id: number): Promise<any> => {
   try {
+    console.log("REQUEST: fetchBook: ", id);
     const response = await fetch(`${API_URL}/books/${id}`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
@@ -43,6 +44,8 @@ const fetchBook = async (id: number): Promise<any> => {
 
 const createBook = async (bookDetails: createBookRequest): Promise<any> => {
   try {
+    console.log("REQUEST: createBook", bookDetails);
+
     const response = await fetch(`${API_URL}/books`, {
       method: "POST",
       headers: {
@@ -79,6 +82,7 @@ const createCharacter = async (
   characterDetails: createCharacterRequest,
 ): Promise<any> => {
   try {
+    console.log("REQUEST: createCharacter", characterDetails);
     const response = await fetch(`${API_URL}/characters`, {
       method: "POST",
       headers: {

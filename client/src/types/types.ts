@@ -4,7 +4,7 @@ interface createBookRequest {
   author: string;
   setting: string; // ?? coffee shop vs Seattle
   plot: string;
-  characters: string; // array of characters
+  characters: string[]; // array of characters
   artStyle: string;
   genre: string;
 }
