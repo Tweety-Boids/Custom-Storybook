@@ -17,7 +17,7 @@ app.use(express.json()); // converts request object as json
 app.use(express.urlencoded({ extended: true })); // recognizes request object as strings or arrays
 app.use(express.static(path.resolve(__dirname, '../src/assets'))); // geneerating static files
 
-})
+
 app.use('/api', apiRouter);
 
 const errorHandler: ErrorRequestHandler = (
