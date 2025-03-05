@@ -12,7 +12,7 @@ interface createBookRequest {
 interface createCharacterRequest {
   // confirm with Jeremy
   name: string;
-  pronouns: string; //drop down to other
+  pronouns: string;
   catchPhrase: string;
   specialTalent: string;
   // physical attributes

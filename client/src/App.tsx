@@ -6,6 +6,7 @@ import "./App.css";
 
 //import components
 import Header from "./components/layout/Header";
+import DevPanel from "./components/layout/DevPanel";
 // import StoryPanel from "./components/layout/StoryPanel";
 import MainDiv from "./components/layout/MainDiv";
 
@@ -17,6 +18,7 @@ function App() {
     <>
       <Header />
       {/* {isOpen && <StoryPanel />} */}
+      <DevPanel />
       <MainDiv />
     </>
   );
