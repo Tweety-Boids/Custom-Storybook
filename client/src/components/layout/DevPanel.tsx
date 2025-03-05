@@ -1,24 +1,24 @@
 import * as api from "../../utils/apiRequests";
 
 const DevPanel = () => {
-  const mockBook = {
-    title: "string",
-    author: "string",
-    setting: "string", // ?? coffee shop vs Seattle
-    plot: "string",
-    character: "string", // array of characters
-    artStyle: "string",
-    genre: "string",
-  };
+    const mockBook = {
+        title: "Spirited Away",
+        author: "Hayao Miyazaki",
+        setting: "Spirit World", // Updated to reflect the film's setting
+        plot: "A young girl, Chihiro, must navigate the Spirit World to save her parents from a curse.",
+        characters: "Chihiro, Haku, Yubaba, No-Face", // Updated characters
+        artStyle: "Anime",
+        genre: "Fantasy",
+      };
 
   const mockCharacter = {
-    name: "string",
-    pronouns: "string",
-    catchPhrase: "string",
-    specialTalent: "string",
-    // physical attributes
-    hairColor: "string",
-    eyeColor: "string",
+    name: "Chihiro", // Updated character name
+    age: 10, 
+    pronouns: "she/her",
+    catchPhrase: "I will find a way to save them!", // Updated catchphrase
+    specialTalent: "Bravery in the face of adversity", // Updated special talent
+    hairColor: "Brown", // Updated hair color
+    eyeColor: "Brown", // Updated eye color
   };
 
   return (
