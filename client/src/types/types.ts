@@ -1,4 +1,3 @@
-// ??? what type is character? an id?
 interface createBookRequest {
   title: string;
   author: string;
@@ -11,7 +10,6 @@ interface createBookRequest {
 
 interface createCharacterRequest {
   name: string;
-  age: number;
   pronouns: string;
   // physical attributes
   hairColor: string;
