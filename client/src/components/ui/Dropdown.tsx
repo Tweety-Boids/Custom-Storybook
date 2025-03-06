@@ -11,20 +11,17 @@ interface DropdownProps {
 }
 
 const Dropdown = ({ label, name, value, options, onChange }: DropdownProps) => {
-  // const generateDropdownName = (label:string) :string => {
-  //   let name:string[] = label.split(' ')
-  //   name[0] = name[0].toLowerCase()
-  //   return name.join("")
-  // }
-
-  // const dropdownName: string = generateDropdownName(label)
-
   return (
     <>
-      {/* <h3>--DROP DOWN</h3> */}
-      <div>
+      <div className="flex flex-col">
         <label htmlFor={name}>{label}: </label>
-        <select name={name} id={name} value={value} onChange={onChange}>
+        <select
+          name={name}
+          id={name}
+          value={value}
+          onChange={onChange}
+          className="text-stone-900"
+        >
           {options &&
             options.map((option, index) => {
               return (

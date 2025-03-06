@@ -4,21 +4,23 @@ interface createBookRequest {
   author: string;
   setting: string; // ?? coffee shop vs Seattle
   plot: string;
-  characters: string[]; // array of characters
+  characters: number[]; // array of character ids
   artStyle: string;
   genre: string;
 }
 
 interface createCharacterRequest {
-  // confirm with Jeremy
   name: string;
   age: number;
   pronouns: string;
-  catchPhrase: string;
-  specialTalent: string;
   // physical attributes
   hairColor: string;
   eyeColor: string;
+  physicalDescription: string;
+  // non-physical attributes
+  personality: string;
+  specialTalent: string;
+  catchPhrase: string;
 }
 
 export type { createBookRequest, createCharacterRequest };
