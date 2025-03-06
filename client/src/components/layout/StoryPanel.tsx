@@ -15,7 +15,6 @@ const StoryPanel = () => {
       {/* <h3>--STORY PANEL--</h3> */}
       <BookCreator />
       <CharacterCreator />
-      <CharacterList />
     </div>
   );
 };
