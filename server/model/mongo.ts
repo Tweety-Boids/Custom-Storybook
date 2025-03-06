@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'; 
-import { ServerApi, UserPreferenceBody } from '../../types/types';
+import { ServerApi, Characters } from '../../types/types';
 
 dotenv.config();
 
@@ -31,16 +31,18 @@ async function run() {
 
 run().catch(console.dir);
 
-const userSchema = new mongoose.Schema<UserPreferenceBody>({
-  title: { type: String },
-  art_style: { type: String },
-  author: { type: String },
-  character: { type: String },
-  genre: { type: String },
-  setting: { type: String },
+const characterSchema = new mongoose.Schema<Characters>({
+  name: { type: String },
+  pronouns: { type: String },
+  catch_phrase: { type: String },
+  personality: { type: String },
+  special_talent: { type: String },
+  hair_color: { type: String },
+  eye_color: { type: String },
+  physical_description: { type: String },
 });
 
-const User = mongoose.model<UserPreferenceBody>('User', userSchema);
+const Characters = mongoose.model<Characters>('Characters', characterSchema);
 
-export default User;
+export default Characters;
 // node --loader ts-node/esm /Users/stevenyeung/Custom-Storybook/server/model/mongo.ts

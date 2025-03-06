@@ -19,6 +19,17 @@ export interface UserPreferenceBody {
   setting: string;
 }
 
+export interface Characters {
+  name: string;
+  pronouns: string;
+  catch_phrase: string;
+  personality: string;
+  special_talent: string;
+  hair_color: string;
+  eye_color: string;
+  physical_description: string;
+}
+
 
 export type StoryMetadata = {
   id: string;
