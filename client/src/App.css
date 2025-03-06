@@ -1,49 +1,39 @@
-button {
-  color: white;
-  border: 1px solid white;
-  padding: 10px;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-button:hover {
-  background-color: blue;
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  height: 100vh;
 }
-
+/* LAYOUT POSITIONING */
 .dev-panel-wrapper {
   display: flex;
   gap: 10px;
   padding: 10px;
 }
 
-/* LAYOUT POSITIONING */
-body {
-  background-color: #242424;
-  color: rgba(255, 255, 255, 0.87);
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  height: 100vh;
-}
-
 .header-wrapper {
-  border: 1px solid red;
-  height: 70px;
+  @apply bg-sky-800;
+  height: 80px;
   /* make sticky */
 }
 
+.story-panel-wrapper {
+  @apply text-gray-50 bg-slate-400;
+  @apply p-4;
+  width: 300px;
+  height: 100vh;
+}
+
 .main-div-wrapper {
-  border: 1px solid yellow;
+  @apply bg-stone-50;
+  /* background-color: #f1ead3; */
   height: 100vh;
   display: flex;
 }
 
-.story-panel-wrapper {
-  border: 1px solid orange;
-  background-color: orange;
-  /* position: absolute; */
-  width: 350px;
-  height: 100vh;
-}
-
 .main-book-list-wrapper {
-  border: 1px solid green;
   height: 100vh;
   width: 90%;
   margin: 0 auto;
@@ -68,4 +58,14 @@ body {
   width: 150px;
   display: flex;
   flex-direction: column;
+}
+
+button {
+  color: white;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: blue;
 }
