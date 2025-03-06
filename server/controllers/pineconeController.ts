@@ -109,15 +109,38 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
   });
 };
 
+export const getAllBooks: RequestHandler = async (_req, res, next) => {
+
+  const index = pc.index("stories");
+
+  // list as pages of book results vvv
+  const results = await index.listPaginated();
+
+  console.log('List of all books: ', results.vectors);
+
+  // you can turn to next page of book results vvv
+  // await index.listPaginated({prefix: 'dox1#', paginationToken: results.pagination.next});
+
+  res.locals.allBooks = results;
+  return next();
+}
+
+
 //fetch from pinecone by element id for the bookshelf
-export const queryPineconeById: RequestHandler = async (_req, res, next) => {
+export const queryPineconeById: RequestHandler = async (req, res, next) => {
+  const {bookID} = req.body;
+  const fakeId = '1234'
   // To get the unique host for an index,
   // see https://docs.pinecone.io/guides/data/target-an-index
-  const index = pc.index("stories", "INDEX_HOST");
+  const index = pc.index("stories");
 
   const fetchResult = await index
-    .namespace("example-namespace")
-    .fetch(["id-1", "id-2"]);
+    // .namespace("example-namespace")
+    .fetch([fakeId]);
+
+  res.locals.idBooks = fetchResult
+  console.log('Fetch Book by id:', fetchResult);
+  return next();
 };
 
 // get elements from pinecone using embed/vectors
