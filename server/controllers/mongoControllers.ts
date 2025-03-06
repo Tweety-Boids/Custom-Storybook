@@ -1,33 +1,55 @@
 import { Request, Response, NextFunction } from "express";
-import { UserPreferenceBody } from "../../types/types";
-import User from "../model/mongo.ts";
+import Characters from "../model/mongo.ts";
 
 const mongoController: any = {};
 
-mongoController.addUserPreference = async (
-  req: Request<{}, {}, UserPreferenceBody>,
+mongoController.getCharacters = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { title, art_style, author, character, genre, setting } = req.body;
-
+  
   try {
-    const newUser = new User({
-      title: title,
-      art_style: art_style,
-      author: author,
-      character: character,
-      genre: genre,
-      setting: setting
-    });
-
-    await newUser.save();
-    console.log('User preferences saved:', newUser);
+    const characters = await Characters.find();
+    console.log(characters);
+    res.locals.characters = characters;
+    next();
   } catch (error) {
-    console.error('Error inserting user preferences:', error);
+    console.error('Error getting all characters:', error);
+  }
+};
+
+mongoController.addCharacter = async (
+  req: Request<{}, {}, Characters>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { name, pronouns, catch_phrase, personality, special_talent, hair_color, eye_color, physical_description } = req.body;
+
+  if (!name || !pronouns || !catch_phrase || !personality || !special_talent || !hair_color || !eye_color || !physical_description) {
+    throw new Error('All fields are required');
   }
 
-  next();
+  try {
+    const newCharacter = new Characters({
+      name: name,
+      pronouns: pronouns,
+      catch_phrase: catch_phrase,
+      personality: personality,
+      special_talent: special_talent,
+      hair_color: hair_color,
+      eye_color: eye_color,
+      physical_description: physical_description,
+    });
+
+    const characterID = await newCharacter.save();
+    console.log('New character saved:', newCharacter);
+    res.locals.newCharacter = characterID;
+    // console.log("RES LOCALS IS: ", res.locals.newCharacter);
+    next();
+  } catch (error) {
+    console.error('Error inserting new character:', error);
+  }
 };
 
 export default mongoController;

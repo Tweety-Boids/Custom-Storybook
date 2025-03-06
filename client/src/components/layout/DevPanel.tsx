@@ -1,3 +1,4 @@
+import { createCharacterRequest } from "../../types/types";
 import * as api from "../../utils/apiRequests";
 
 const DevPanel = () => {
@@ -15,11 +16,13 @@ const DevPanel = () => {
     name: "Chihiro", // Updated character name
     age: 10, 
     pronouns: "she/her",
-    catchPhrase: "I will find a way to save them!", // Updated catchphrase
-    specialTalent: "Bravery in the face of adversity", // Updated special talent
-    hairColor: "Brown", // Updated hair color
-    eyeColor: "Brown", // Updated eye color
-  };
+    catch_phrase: "I will find a way to save them!", // Updated catchphrase
+    personality: "Cunning, ambitious, and fiercely protective of his allies.",
+    special_talent: "Bravery in the face of adversity", // Updated special talent
+    hair_color: "Brown", // Updated hair color
+    eye_color: "Brown", // Updated eye color
+    physical_description: "Tall and broad-shouldered with sharp features, often seen wearing a dark green robe with silver embroidery."
+  } as createCharacterRequest;
 
   return (
     <>

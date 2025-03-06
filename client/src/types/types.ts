@@ -12,13 +12,14 @@ interface createBookRequest {
 interface createCharacterRequest {
   // confirm with Jeremy
   name: string;
-  age: number;
   pronouns: string;
-  catchPhrase: string;
-  specialTalent: string;
+  catch_phrase: string;
+  personality: string;
+  special_talent: string;
   // physical attributes
-  hairColor: string;
-  eyeColor: string;
+  hair_color: string;
+  eye_color: string;
+  physical_description: string;
 }
 
 export type { createBookRequest, createCharacterRequest };
