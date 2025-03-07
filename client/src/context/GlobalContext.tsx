@@ -118,7 +118,7 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     // fetch books and characters
 
-    // getBooks()(dispatch);
+    getBooks()(dispatch);
   }, []);
 
   return (

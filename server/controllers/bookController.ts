@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {Book} from "../model/bookModel.js";
+import { Book } from "../model/bookModel.js";
 
 const bookController: any = {};
 
@@ -23,7 +23,7 @@ bookController.postBook = async (
       genre,
     };
     // add if statement to check missing properties
-    const newBook = await Book.create({metadata: bookMetadata});
+    const newBook = await Book.create({ metadata: bookMetadata });
     // console.log("postBook: newBook", newBook);
 
     res.locals.metadata = newBook;
@@ -40,23 +40,22 @@ bookController.getBooks = async (
   res: Response<any>,
   next: NextFunction,
 ): Promise<void> => {
-  console.log("ENDPOINT: getBooks");
-  const mockBookData = [
-    {
-      id: 1,
-      title: "BOOK 1",
-    },
-    {
-      id: 2,
-      title: "BOOK 2",
-    },
-    {
-      id: 3,
-      title: "BOOK 3",
-    },
-  ];
-  res.locals.books = mockBookData;
-  return next();
+  try {
+    console.log("ENDPOINT: getBooks");
+    const books = await Book.find();
+    if (!books) {
+      return next({
+        log: "No books found",
+        status: 404,
+        message: { err: "No books found" },
+      });
+    }
+    res.locals.books = books;
+    return next();
+  } catch (error: any) {
+    console.error("Error in the getBooks method:", error.message);
+    throw error;
+  }
 };
 
 export default bookController;

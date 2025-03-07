@@ -19,15 +19,8 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
   console.log("CONTROLLER: upsertDataToPinecone");
   //res locals embedding and story from OAI
   const { metadata, generatedStory, embedding } = res.locals;
-  console.log("initialize single upsert");
-  // prep metadata for upsert (stringify arrays)
-  // console.log('METADATA TO UPSERT', metadata);
-  // Add this conversion before the upsert
-  // if (metadata.characters && Array.isArray(metadata.characters)) {
-  //   // Convert number array to string array for Pinecone
-  //   metadata.characters = metadata.characters.map(String);
-  // }
   const { _id } = metadata;
+  console.log("initialize single upsert");
   console.log("METADATA TO UPSERT", metadata.metadata);
 
   await index.upsert([
@@ -45,104 +38,96 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
   return next();
 };
 
-//   const realAzzMetadata: EmbeddingData = {
-//     story: metadata,
-//     embedding,
-//   };
-//   // const index = pc.index<StoryMetadata>("stories");
+  // const realAzzMetadata: EmbeddingData = {
+  //   story: metadata,
+  //   embedding,
+  // };
 
 //   //TODO: Fix this in order to upsert embedded books vvv
 //   /**
 //    * Generate Pinecone records from embeddings data.
 //    */
-//   const generatePineconeRecords = (
-//     embeddingsData: EmbeddingData[],
-//   ): PineconeRecord<StoryMetadata>[] => {
-//     const pineconeRecords: PineconeRecord<StoryMetadata>[] = [];
-//     // for (const { story, embedding } of embeddingsData) {
-//     //   pineconeRecords.push({
-//     //     id: story.id,
-//     //     values: embedding,
-//     //     metadata: story,
-//     //   });
-//     // }
-//     // for (const { story, embedding } of embeddingsData) {
-//     //   pineconeRecords.push({
-//     //     id: story.id,
-//     //     metadata: metadata,
-//     //     values: embedding,
-//     //   });
-//     // }
+  const generatePineconeRecords = (
+    embeddingsData: EmbeddingData[],
+  ): PineconeRecord<StoryMetadata>[] => {
+    const pineconeRecords: PineconeRecord<StoryMetadata>[] = [];
+    for (const { story, embedding } of embeddingsData) {
+      pineconeRecords.push({
+        id: story.id,
+        values: embedding,
+        metadata: story,
+      });
+    }
 
-//     console.log("Genereated Pinecone Records:", pineconeRecords);
+    console.log("Genereated Pinecone Records:", pineconeRecords);
 
-//     return pineconeRecords;
-//   };
+    return pineconeRecords;
+  };
 
 //   /**
 //    * Create batches of Pinecone records for upserting.
 //    * Refer to the Pinecone documentation: https://docs.pinecone.io/guides/data/upsert-data
 //    */
-//   const createPineconeBatches = (
-//     vectors: PineconeRecord<StoryMetadata>[],
-//     batchSize = 200,
-//   ): PineconeRecord<StoryMetadata>[][] => {
-//     const batches: PineconeRecord<StoryMetadata>[][] = [];
-//     for (let i = 0; i < vectors.length; i += batchSize) {
-//       batches.push(vectors.slice(i, i + batchSize));
-//     }
+  const createPineconeBatches = (
+    vectors: PineconeRecord<StoryMetadata>[],
+    batchSize = 200,
+  ): PineconeRecord<StoryMetadata>[][] => {
+    const batches: PineconeRecord<StoryMetadata>[][] = [];
+    for (let i = 0; i < vectors.length; i += batchSize) {
+      batches.push(vectors.slice(i, i + batchSize));
+    }
 
-//     console.log("Batches:", batches);
-//     return batches;
-//   };
+    console.log("Batches:", batches);
+    return batches;
+  };
 
 //   /**
 //    * Upsert batches of Pinecone records to Pinecone.
 //    * Provide logging for each batch you try to, including the IDs of the first and last records in the batch.
 //    * Log the success or failure of each batch upsert.
 //    */
-//   const upsertBatchesToPicone = async (
-//     pineconeBatches: PineconeRecord<StoryMetadata>[][],
-//   ): Promise<void> => {
-//     const delayBatch = (ms: number): Promise<void> =>
-//       new Promise((resolve) => setTimeout(resolve, ms));
+  const upsertBatchesToPicone = async (
+    pineconeBatches: PineconeRecord<StoryMetadata>[][],
+  ): Promise<void> => {
+    const delayBatch = (ms: number): Promise<void> =>
+      new Promise((resolve) => setTimeout(resolve, ms));
 
-//     const upsertResults = await Promise.allSettled(
-//       pineconeBatches.map(async (batch, i) => {
-//         // await delayBatch(1000 * i); // Uncomment if you're getting Pinecone network errors
-//         console.log(
-//           `Upserting batch ${i} of ${pineconeBatches.length}: IDs ${
-//             batch[0].id
-//           } through ${batch[batch.length - 1].id}`,
-//         );
+    const upsertResults = await Promise.allSettled(
+      pineconeBatches.map(async (batch, i) => {
+        // await delayBatch(1000 * i); // Uncomment if you're getting Pinecone network errors
+        console.log(
+          `Upserting batch ${i} of ${pineconeBatches.length}: IDs ${
+            batch[0].id
+          } through ${batch[batch.length - 1].id}`,
+        );
 
-//         console.log("Upsert Batches to Pinecone:", batch);
+        console.log("Upsert Batches to Pinecone:", batch);
 
-//         return index.upsert(batch);
-//       }),
-//     );
+        return index.upsert(batch);
+      }),
+    );
 
-//     upsertResults.forEach((result, i) => {
-//       if (result.status === "fulfilled") {
-//         console.log(`Batch ${i + 1} upserted successfully.`);
-//       } else {
-//         console.error(`Failed to upsert batch ${i + 1}:`, result.reason);
-//       }
-//     });
-//   };
+    upsertResults.forEach((result, i) => {
+      if (result.status === "fulfilled") {
+        console.log(`Batch ${i + 1} upserted successfully.`);
+      } else {
+        console.error(`Failed to upsert batch ${i + 1}:`, result.reason);
+      }
+    });
+  };
 
-//   const main = async (): Promise<void> => {
-//     // TODO: generatePineconeRecords needs embeddings data to function. will probably be res.locals data.
-//     const pineconeRecords = generatePineconeRecords([realAzzMetadata]);
-//     const pineconeBatches = createPineconeBatches(pineconeRecords);
-//     upsertBatchesToPicone(pineconeBatches);
-//   };
+  // const main = async (): Promise<void> => {
+  //   // TODO: generatePineconeRecords needs embeddings data to function. will probably be res.locals data.
+  //   const pineconeRecords = generatePineconeRecords([realAzzMetadata]);
+  //   const pineconeBatches = createPineconeBatches(pineconeRecords);
+  //   upsertBatchesToPicone(pineconeBatches);
+  // };
 
-//   main().catch((error) => {
-//     console.error("An error occurred in main:", error);
-//     process.exit(1);
-//   });
-// };
+  // main().catch((error) => {
+  //   console.error("An error occurred in main:", error);
+  //   process.exit(1);
+  // });
+
 
 export const getAllBooks: RequestHandler = async (_req, res, next) => {
   const index = pc.index("stories");
