@@ -3,32 +3,33 @@ interface OptionList {
 }
 
 interface DropdownProps {
-  label: string
-  options: any[]
+  label: string;
+  name: string;
+  value: string;
+  options: any[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-const Dropdown = ({label, options}: DropdownProps) => {
-  const generateDropdownName = (label:string) :string => {
-    let name:string[] = label.split(' ')
-    name[0] = name[0].toLowerCase()
-    return name.join("")
-  }
 
-  const dropdownName: string = generateDropdownName(label)
-
+const Dropdown = ({ label, name, value, options, onChange }: DropdownProps) => {
   return (
     <>
-      {/* <h3>--DROP DOWN</h3> */}
-      <div>
-        <label htmlFor={dropdownName}>{label}: </label>
-        <select name={dropdownName} id={dropdownName}>
-        {/* {options && Object.entries(options).map((option)=>{
-          return <option key={option[0]} value={option[0]}>{option[1]}</option>
-
-        })} */}
-
-        {options && options.map((option, index) => {
-          return <option key={index} value={option.value}>{option.label}</option>
-        })}
+      <div className="flex flex-col">
+        <label htmlFor={name}>{label}: </label>
+        <select
+          name={name}
+          id={name}
+          value={value}
+          onChange={onChange}
+          className="form-field-text"
+        >
+          {options &&
+            options.map((option, index) => {
+              return (
+                <option key={index} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
         </select>
       </div>
     </>
