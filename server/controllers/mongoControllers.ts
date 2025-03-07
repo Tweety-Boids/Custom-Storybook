@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import Characters from "../model/mongo.ts";
-import { Images } from "../model/mongo.ts";
+// import Characters from "../model/mongo.ts";
+import { Images, Characters } from "../model/mongo.ts";
 
 const mongoController: any = {};
 
@@ -54,7 +54,7 @@ mongoController.addCharacter = async (
 };
 
 mongoController.addImage = async (
-  req: Request<{}, {}, Images>,
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -62,13 +62,13 @@ mongoController.addImage = async (
     const imageName = res.locals.metadata.title
 
     
-//need to determin the correct variables for data and contentType below
+//need to determine the correct variables for data and contentType below
 
     const newImage = new Images({
       name: `${imageName}_Cover`,
       img: {
-        data:Buffer;
-        contentType: String;
+        data:Buffer,
+        contentType: String
       }
     });
 

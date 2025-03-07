@@ -29,7 +29,7 @@ async function run() {
   }
 }
 
-run().catch(console.dir);
+// run().catch(console.dir);
 
 
 //Character Schema and Export
@@ -56,11 +56,12 @@ const imageSchema = new mongoose.Schema({
   }
 });
 
-export const Image = mongoose.model<Images>('Images', imageSchema)
+const Images = mongoose.model<Images>('Images', imageSchema)
 
 const Characters = mongoose.model<Characters>('Characters', characterSchema);
 
-export default Characters;
+// export default Characters;
+export { Characters, Images };
 // node --loader ts-node/esm /Users/stevenyeung/Custom-Storybook/server/model/mongo.ts
 
 /*
