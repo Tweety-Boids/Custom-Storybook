@@ -1,18 +1,9 @@
 import { createBookRequest, createCharacterRequest } from "../types/types";
 const API_URL = "http://localhost:3000/api";
 
-// interface ApiRequests {
-//   fetchBooks: () => Promise<any>;
-//   fetchBook: () => Promise<any>; // id on body or param??
-//   createBook: (bookDetails: createBookReqest) => Promise<any>;
-
-//   getCharacters: () => Promise<any>;
-//   createCharacter: () => Promise<any>;
-//   editCharacter: () => Promise<any>;
-// }
-
 const fetchBooks = async (): Promise<any> => {
   try {
+    console.log("REQUEST: all books");
     const response = await fetch(`${API_URL}/books`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
@@ -29,6 +20,7 @@ const fetchBooks = async (): Promise<any> => {
 
 const fetchBook = async (id: number): Promise<any> => {
   try {
+    console.log("REQUEST: fetchBook: ", id);
     const response = await fetch(`${API_URL}/books/${id}`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
@@ -43,6 +35,8 @@ const fetchBook = async (id: number): Promise<any> => {
 
 const createBook = async (bookDetails: createBookRequest): Promise<any> => {
   try {
+    console.log("REQUEST: createBook", bookDetails);
+
     const response = await fetch(`${API_URL}/books`, {
       method: "POST",
       headers: {
@@ -54,7 +48,7 @@ const createBook = async (bookDetails: createBookRequest): Promise<any> => {
       throw new Error(`Failed to get book: ${response.status}`);
     }
     const data = await response.json();
-    console.log("createBok: ", data);
+    console.log("DATA createBok: ", data);
     return data;
   } catch (err) {
     console.error(`ERROR: createBook: ${err}`);
@@ -63,6 +57,7 @@ const createBook = async (bookDetails: createBookRequest): Promise<any> => {
 
 const getCharacters = async (): Promise<any> => {
   try {
+    console.log("REQUEST: all characters");
     const response = await fetch(`${API_URL}/characters`);
     if (!response.ok) {
       throw new Error(`Failed to get book: ${response.status}`);
@@ -79,6 +74,7 @@ const createCharacter = async (
   characterDetails: createCharacterRequest,
 ): Promise<any> => {
   try {
+    console.log("REQUEST: createCharacter", characterDetails);
     const response = await fetch(`${API_URL}/characters`, {
       method: "POST",
       headers: {

@@ -12,11 +12,11 @@ const Header = () => {
   };
 
   return (
-    <div className="header-wrapper">
-      <h3>--HEADER--</h3>
-      <div>
+    <div className="header-wrapper flex items-center p-4 text-accent-color">
+      <h1 className="text-3xl">Fable</h1>
+      {/* <div>
         Search library: <input type="text" />
-      </div>
+      </div> */}
       {/* <button onClick={toggleStoryPanel}>Toggle Story Panel</button>
       <button onClick={toggleStoryPanel}>Toggle Story Panel</button> */}
     </div>

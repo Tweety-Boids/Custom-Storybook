@@ -72,8 +72,16 @@ const reducer = (
         // console.log("FETCHED BOOKS", action.payload);
         draft.bookList = action.payload;
         break;
+      case ActionTypes.CREATE_BOOK:
+        const newBook = action.payload;
+        draft.bookList.push(newBook);
+        break;
       case ActionTypes.GET_CHARACTERS:
         draft.characterList = action.payload;
+        break;
+      case ActionTypes.CREATE_CHARACTER:
+        const newCharacter = action.payload;
+        draft.characterList.push(newCharacter);
         break;
       // default case if action.type doesn't match any case
       default:

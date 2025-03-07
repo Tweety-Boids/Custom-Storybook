@@ -1,25 +1,96 @@
-import TextInput from '../ui/TextInput'
-import Dropdown from '../ui/Dropdown'
+// import state management hooks
+import { useState } from "react";
+import useGlobalContext from "../../hooks/useGlobalContext";
+
+// import components
+import TextInput from "../ui/TextInput";
+import Dropdown from "../ui/Dropdown";
+import CharacterList from "../characters/CharacterList";
+
+// import utils
 import * as optionList from "../ui/dropdownOptions";
+import { mockBookForPostRequest } from "../../utils/mockData";
+
+// import actions
+import { createBookAction } from "./BookActions";
 
 const BookCreator = () => {
-  const createBook = () => {
-    console.log('createBook button clicked');
-  }
+  const { dispatch } = useGlobalContext();
+  const [bookDetails, setBookDetails] = useState({
+    ...mockBookForPostRequest,
+  });
 
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setBookDetails((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleCreateBook = async () => {
+    try {
+      console.log("createBook button clicked");
+      await createBookAction(mockBookForPostRequest)(dispatch);
+    } catch (error) {
+      console.error("Error creating book:", error);
+    }
+  };
 
   return (
     <>
-      <h3>--BOOK CREATOR--</h3>
+      <div className="flex">
+        <h3>Compose a story</h3>
+        <button onClick={handleCreateBook}>Scribe</button>
+      </div>
+
+      {/* <h3>Build a Book</h3> */}
       <div className="book-creator-wrapper"></div>
       {/* <div onClick={createBook}>Create Book:</div> */}
-      <TextInput  label="Title"/>
-      <TextInput  label="Author"/>
-      <TextInput  label="Setting"/>
-      <TextInput  label="Plot"/>
-      <Dropdown label="Art Style" options={optionList.artStyles}/>
-      <Dropdown label="Genre" options={optionList.genres}/>
-      {/* <button onClick={createBook}>Create Book: </button><input type="text"/> */}
+      <TextInput
+        label="Title"
+        name="title"
+        value={bookDetails.title}
+        onChange={handleChange}
+      />
+      <TextInput
+        label="Author"
+        name="author"
+        value={bookDetails.author}
+        onChange={handleChange}
+      />
+      <TextInput
+        label="Setting"
+        name="setting"
+        value={bookDetails.setting}
+        onChange={handleChange}
+      />
+      <TextInput
+        label="Plot"
+        name="plot"
+        size={3}
+        value={bookDetails.plot}
+        onChange={handleChange}
+      />
+      <Dropdown
+        label="Art Style"
+        name="artStyle"
+        value={bookDetails.artStyle}
+        options={optionList.artStyles}
+        onChange={handleChange}
+      />
+      <Dropdown
+        label="Genre"
+        name="genre"
+        value={bookDetails.genre}
+        options={optionList.genres}
+        onChange={handleChange}
+      />
+      <CharacterList />
     </>
   );
 };
