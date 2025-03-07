@@ -14,17 +14,21 @@ body {
 }
 
 .header-wrapper {
-  @apply bg-sky-800;
-  height: 80px;
+  @apply bg-main-color border-b-[8px] border-b-accent-color;
+  height: 90px;
   /* make sticky */
 }
 
 .story-panel-wrapper {
-  @apply text-gray-50 bg-slate-400;
+  @apply text-gray-50 bg-secondary-color border-r-[8px] border-r-accent-color;
   @apply p-4;
   width: 300px;
-  height: 100vh;
 }
+.form-field-text {
+  @apply text-stone-900 px-2 py-1 rounded-lg
+  
+}
+
 
 .main-div-wrapper {
   @apply bg-stone-50;
@@ -61,6 +65,7 @@ body {
 }
 
 button {
+  @apply bg-slate-700;
   color: white;
   border: 1px solid white;
   padding: 10px;
