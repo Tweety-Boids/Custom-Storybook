@@ -20,7 +20,7 @@ const Dropdown = ({ label, name, value, options, onChange }: DropdownProps) => {
           id={name}
           value={value}
           onChange={onChange}
-          className="text-stone-900"
+          className="form-field-text"
         >
           {options &&
             options.map((option, index) => {

@@ -10,6 +10,7 @@ interface createBookRequest {
 
 interface createCharacterRequest {
   name: string;
+  age: string | number;
   pronouns: string;
   // physical attributes
   hairColor: string;

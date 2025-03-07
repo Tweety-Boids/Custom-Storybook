@@ -15,7 +15,7 @@ const TextInput = ({ label, name, value, size, onChange }: TextInputProps) => {
         <label htmlFor={name}>{label}:</label>
         {!size ? (
           <input
-            className="form-field-text text-stone-900 px-2"
+            className="form-field-text "
             type="text"
             name={name}
             value={value}
@@ -23,7 +23,7 @@ const TextInput = ({ label, name, value, size, onChange }: TextInputProps) => {
           />
         ) : (
           <textarea
-            className="form-field-text text-stone-900 px-2"
+            className="form-field-text"
             name={name}
             value={value}
             rows={size}

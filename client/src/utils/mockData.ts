@@ -7,7 +7,7 @@ export const mockBookForPostRequest = {
   author: "Hayao Miyazaki",
   setting: "Spirit World", // Updated to reflect the film's setting
   plot: "A young girl, Chihiro, must navigate the Spirit World to save her parents from a curse.",
-  characters: "Chihiro, Haku, Yubaba, No-Face", // Updated characters
+  characters: [41,42,43],
   artStyle: "Anime",
   genre: "Fantasy",
 };
@@ -18,7 +18,7 @@ export const mockHumanCharacterForPostRequest = {
   pronouns: "she/her",
   hairColor: "Brown", // Updated hair color
   eyeColor: "Brown", // Updated eye color
-  species: "human",
+  species: "Human",
   physicalDescription:
     "Chihiro has long, straight brown hair that she often wears in a simple ponytail. She has large, expressive brown eyes that reflect her emotions. Chihiro typically wears a pink and white outfit, consisting of a short-sleeved shirt and a skirt, along with a pair of white socks and simple shoes. Her appearance is youthful and innocent, embodying the spirit of a brave girl navigating a fantastical world.",
   personality:
@@ -71,7 +71,7 @@ export const mockCharactersFromGetRequest = [
     name: "Chihiro", // Updated character name
     age: 10,
     pronouns: "she/her",
-    species: "human",
+    species: "Human",
     profileImg: chihiroImg, 
   },
   {

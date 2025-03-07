@@ -1,3 +1,4 @@
+import { mockHumanCharacterForPostRequest, mockFantasyCharacterForPostRequest, mockBookForPostRequest } from "./mockData";
 import * as api from "./apiRequests";
 
 const DevPanel = () => {
@@ -25,7 +26,7 @@ const DevPanel = () => {
 
         <button
           onClick={() => {
-            api.createBook(mockBook);
+            api.createBook(mockBookForPostRequest);
           }}
         >
           POST /books
@@ -40,7 +41,7 @@ const DevPanel = () => {
         </button>
         <button
           onClick={() => {
-            api.createCharacter(mockCharacter);
+            api.createCharacter(mockHumanCharacterForPostRequest);
           }}
         >
           POST /characters
