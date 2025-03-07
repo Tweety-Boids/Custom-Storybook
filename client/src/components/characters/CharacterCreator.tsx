@@ -2,6 +2,7 @@ import { useState } from "react";
 import Dropdown from "../ui/Dropdown";
 import TextInput from "../ui/TextInput";
 import * as optionList from "../ui/dropdownOptions";
+import CharacterList from "./CharacterList";
 import { mockHumanCharacterForPostRequest, mockFantasyCharacterForPostRequest } from "../../utils/mockData";
 
 const CharacterCreator = () => {
@@ -97,6 +98,7 @@ const CharacterCreator = () => {
           value={characterDetails.catchPhrase}
           onChange={handleChange}
         />
+        <CharacterList />
       </div>
     </>
   );
