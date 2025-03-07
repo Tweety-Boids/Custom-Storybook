@@ -3,6 +3,7 @@ import {
   upsertDataToPinecone,
   queryPineconeById,
   queryPineconeByEmbed,
+  getAllBooks,
 } from "../controllers/pineconeController.ts";
 import {
   OpenAIEmbedding,
@@ -16,9 +17,13 @@ const controller = {
   },
 };
 
+//get all books
+pineconeRouter.get("/gall", getAllBooks, (req, res) => {
+  res.status(200).json(res.locals.allBooks);
+});
 //get by id
-pineconeRouter.get("/gbid", queryPineconeById, (req, res) => {
-  res.status(200).json(res.locals.chores);
+pineconeRouter.post("/gbid", queryPineconeById, (req, res) => {
+  res.status(200).json(res.locals.idBooks);
 });
 //get by embed
 pineconeRouter.get("/gbembed", queryPineconeByEmbed, (req, res) => {
