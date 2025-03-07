@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Characters from "../model/mongo.ts";
+import { Images } from "../model/mongo.ts";
 
 const mongoController: any = {};
 
@@ -51,6 +52,34 @@ mongoController.addCharacter = async (
     console.error('Error inserting new character:', error);
   }
 };
+
+mongoController.addImage = async (
+  req: Request<{}, {}, Images>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const imageName = res.locals.metadata.title
+
+    
+//need to determin the correct variables for data and contentType below
+
+    const newImage = new Images({
+      name: `${imageName}_Cover`,
+      img: {
+        data:Buffer;
+        contentType: String;
+      }
+    });
+
+    const imageID = await newImage.save();
+    console.log ('New Image Saved');
+    res.locals.newImage = imageID;
+    next();
+  } catch (error) {
+    console.error('Error inserting new Image:', error);
+  }
+}
 
 export default mongoController;
 // node --loader ts-node/esm /Users/stevenyeung/Custom-Storybook/server/controllers/mongoControllers.ts

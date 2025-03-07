@@ -39,3 +39,11 @@ export type StoryMetadata = {
   genre: string;
   author: string;
 };
+
+export interface Images {
+  name: string;
+    img: {
+        data: Buffer;
+        contentType: string;
+    };
+}

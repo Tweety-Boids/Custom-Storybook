@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'; 
-import { ServerApi, Characters } from '../../types/types';
+import { ServerApi, Characters, Images } from '../../types/types';
 
 dotenv.config();
 
@@ -31,6 +31,8 @@ async function run() {
 
 run().catch(console.dir);
 
+
+//Character Schema and Export
 const characterSchema = new mongoose.Schema<Characters>({
   name: { type: String },
   pronouns: { type: String },
@@ -42,7 +44,30 @@ const characterSchema = new mongoose.Schema<Characters>({
   physical_description: { type: String },
 });
 
+
+
+
+//Image Schema and Export
+const imageSchema = new mongoose.Schema({
+  name: String,
+  img: {
+      data: Buffer, // Binary data for storing images in MongoDB
+      contentType: String
+  }
+});
+
+export const Image = mongoose.model<Images>('Images', imageSchema)
+
 const Characters = mongoose.model<Characters>('Characters', characterSchema);
 
 export default Characters;
 // node --loader ts-node/esm /Users/stevenyeung/Custom-Storybook/server/model/mongo.ts
+
+/*
+Book schema:
+id: string
+title: string
+author: string
+description: string
+characters: string[]
+*/
