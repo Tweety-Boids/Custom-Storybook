@@ -1,17 +1,23 @@
 import fs from "node:fs";
 import axios from 'axios';
 import FormData from "form-data";
-
 import dotenv from 'dotenv';
+
+import { RequestHandler } from "express";
+
 
 dotenv.config();
 
-const characters = {
-   protag1: "a young man with striking facial features. He has medium-length, wavy dark brown hair that falls naturally around his face, with a slightly tousled appearance. His eyes are deep brown, framed by thick, well-defined eyebrows with a natural arch. His facial structure is sharp and symmetrical, featuring high cheekbones, a straight and well-proportioned nose, and a strong yet refined jawline. His lips are full and slightly parted, with a neutral or subtly pensive expression. He has light stubble on his chin, upper lip, and along his jawline, adding a touch of ruggedness to his otherwise smooth, fair complexion. His skin is clear and evenly toned, with a soft natural glow.",
-   rachel: "Fashionable and confident, typically in trendy outfits. Carries herself with a mix of charm and slight cluelessness.",
-   joey: "Laid-back and charming, often in casual attire like leather jackets or comfortable sweaters. Usually with a goofy grin.",
-   monica: "Organized and competitive, usually in stylish yet practical attire. Often seen with a look of determination or concern.",
-   ross: "Nerdy and somewhat awkward, dressed in smart-casual layers. Often holding a coffee cup with an exasperated or dramatic expression.",
+interface PromptStore {
+  [key: string]: string;
+}
+
+const characters: PromptStore = {
+  protag1: "a young man with striking facial features. He has medium-length, wavy dark brown hair that falls naturally around his face, with a slightly tousled appearance. His eyes are deep brown, framed by thick, well-defined eyebrows with a natural arch. His facial structure is sharp and symmetrical, featuring high cheekbones, a straight and well-proportioned nose, and a strong yet refined jawline. His lips are full and slightly parted, with a neutral or subtly pensive expression. He has light stubble on his chin, upper lip, and along his jawline, adding a touch of ruggedness to his otherwise smooth, fair complexion. His skin is clear and evenly toned, with a soft natural glow.",
+  rachel: "Fashionable and confident, typically in trendy outfits. Carries herself with a mix of charm and slight cluelessness.",
+  joey: "Laid-back and charming, often in casual attire like leather jackets or comfortable sweaters. Usually with a goofy grin.",
+  monica: "Organized and competitive, usually in stylish yet practical attire. Often seen with a look of determination or concern.",
+  ross: "Nerdy and somewhat awkward, dressed in smart-casual layers. Often holding a coffee cup with an exasperated or dramatic expression.",
   phoebe: "Eccentric and free-spirited, often in flowy, bohemian outfits. Expressive and unpredictable, with a guitar always nearby.",
   chandler: "Sarcastic and witty, often lounging casually with an ironic smirk. Typically wears relaxed button-downs and sweater vests.",
 
@@ -19,7 +25,7 @@ const characters = {
 
 
 
-const PromptStore = {
+const prompts: PromptStore = {
   novella: `the artwork for a Romance novella. the source image is the main character, depict this person in action, at the top there is Text that reads: TITLE`,
   pictureBookChar: 'The artwork for a cute childrens book, the scene is a cute tall lanky monster character with red fur and alot of bright red hair on it\'s head, the style is watercolor line illistration on a blank background, the character is very cute and appealing to kids',
   protagsChar: 'a natural portrait of the protagonist of a novel. the background is white.',
@@ -35,7 +41,7 @@ const PromptStore = {
 
 }
 
-const testStory = [
+const testStory: string[] = [
   "Lena had always been an adventurous girl, but she never expected her curiosity to lead her somewhere truly extraordinary. One afternoon, while exploring the overgrown fields behind her grandmother’s cottage, she leaned too far over the edge of an old stone well. The ground beneath her feet crumbled, and with a gasp, she tumbled into the darkness below. Instead of hitting cold water or solid stone, she landed softly on a bed of glowing moss, her fall cushioned as if by magic itself.",
   
   "As she stood up, Lena realized she was no longer in the well but in a vast underground world bathed in golden light. Towering mushrooms pulsed with bioluminescence, and streams of liquid silver wound through meadows of shimmering blue grass. Strange, melodic whispers floated in the air, carried by an unseen wind. A small, fox-like creature with wings hovered nearby, its emerald eyes twinkling with mischief. 'You must be the new traveler,' it said with a grin, its voice like the chime of tiny bells.",
@@ -44,18 +50,61 @@ const testStory = [
   
   "The Queen studied Lena with a knowing smile. 'You are here because your heart is open to wonder,' she said. 'And in this land, wonder is power.' With a wave of her hand, a golden key appeared in Lena’s palm. 'This key unlocks the path between your world and ours. Use it wisely.' As the vision of the crystal palace began to fade, Lena found herself back at the edge of the well, the golden key clutched tightly in her hand. She knew her adventure was only just beginning."
 ]
- 
 
-const stabilityController = {
+interface UserQuery {
+  title?: string;
+  author?: string;
+  setting?: string;
+  plot?: string;
+  characters?: string;
+  artStyle?: string;
+  genre?: string;
+  img_id?: string;
+}
 
-  async generatePageImages (req, res, next) {
+interface BooksData {
+  id: number;
+  title: string;
+}
 
+declare module 'express' {
+  interface Locals {
+    userQuery: UserQuery;
+    books?: BooksData[];
+  }
+  interface Response {
+    locals: Locals;
+  }
+}
+
+interface ImagePayload {
+  prompt: string;
+  output_format: string;
+  aspect_ratio?: string;
+  style_preset?: string;
+  mode?: string;
+  strength?: number;
+  cfg_scale?: number;
+  seed?: number;
+  model?: string;
+}
+
+interface ImageToImagePayload extends ImagePayload {
+  image: fs.ReadStream;
+}
+
+
+
+  
+  export const generatePageImages: RequestHandler = async (req, res, next) => {
+
+    
     try {
       const storyArray = testStory;
   
       await Promise.all(storyArray.map(async (element, page) =>  {
 
-        const payload = {
+        const payload: ImagePayload = {
           prompt: `a black and white turn of the century book illustration of the following plot: ${element}` ,
           output_format: "jpeg",
           aspect_ratio: "1:1",
@@ -80,11 +129,11 @@ const stabilityController = {
         if(response.status === 200) {
           //test line while not using locals
           // fs.writeFileSync(`./test_${page}.jpeg`, Buffer.from(response.data));
-          fs.writeFileSync(`./${res.locals.userQuery.title || 'test' }_${page}.jpeg`, Buffer.from(response.data));
+          fs.writeFileSync(`./${res.locals.userQuery?.title || 'test' }_${page}.jpeg`, Buffer.from(response.data));
           console.log (response.status, "we have finished generating the image");
           
           //mark in when using proper end points
-          res.locals.userQuery.img_id = `${res.locals.userQuery.title}_${page}.jpeg`;
+          res.locals.userQuery.img_id = `${res.locals.userQuery?.title}_${page}.jpeg`;
           console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
         } else {
           throw new Error(`*******${response.status}: ${response.data.toString()}`);
@@ -99,17 +148,22 @@ const stabilityController = {
 
 
     } catch (error) {
-      console.error("Error generating image:", error.message);
+      if (error instanceof Error) {
+        console.error("Error generating image:", error.message);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
       throw error;
     }
 
-  },
+  }
 
-  async generateText2Image(req, res, next) {
+  export const generateText2Image: RequestHandler = async (req, res, next) =>  {
+
 
     try {
 
-      const payload = {
+      const payload: ImagePayload = {
           prompt: `a book cover for a story with the plot summary: ${res.locals.userQuery.plot}` ,
           output_format: "jpeg",
           aspect_ratio: "9:16",
@@ -130,10 +184,10 @@ const stabilityController = {
         },
       );
       if(response.status === 200) {
-        fs.writeFileSync(`./${res.locals.userQuery.title}.jpeg`, Buffer.from(response.data));
+        fs.writeFileSync(`./${res.locals.userQuery?.title}.jpeg`, Buffer.from(response.data));
         console.log (response.status, "we have finished generating the image");
 
-        res.locals.userQuery.img_id = `${res.locals.userQuery.title}.jpeg`;
+        res.locals.userQuery.img_id = `${res.locals.userQuery?.title}.jpeg`;
         console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
 
         next();
@@ -143,19 +197,28 @@ const stabilityController = {
         throw new Error(`*******${response.status}: ${response.data.toString()}`);
       }
     } catch (error) {
-      console.error("Error generating image:", error.message);
+      if (error instanceof Error) {
+        console.error("Error generating image:", error.message);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
       throw error;
     }
 
-  },
+  }
 
+  export const generateImage2Image: RequestHandler = async (_req, res, next) =>{
 
-  async generateImage2Image (req, res, next) {
-  
+    if (!res.locals.userQuery) {
+      res.locals.userQuery = {};
+    }
+    res.locals.userQuery.img_id = `${res.locals.userQuery.title || 'default'}.jpeg`;
+    
+
     try {
-      const payload = {
+      const payload: ImageToImagePayload = {
         image: fs.createReadStream("client/src/assets/monsters/screenshot_2025-03-03_at_9.01.30___pm_720.png"),
-        prompt: PromptStore.hug,
+        prompt: prompts.hug,
         mode: "image-to-image",
         strength: 0.3, //adhearance to the image provided
         cfg_scale: 10, //adherance to the text prompt
@@ -183,51 +246,19 @@ const stabilityController = {
         throw new Error(`${response.status}: ${response.data.toString()}`);
       }
 
-    } catch (error ) {
-      console.error("Error generating image:", error.message);
-      throw error;
-    }
-  
-  },
-
-
-  async generateSearchAndReplace (req, res, next) {
-  
-    try {
-      const payload = {
-        image: fs.createReadStream("png-transparent-woman-alpha-channel-urban-women-tshirt-sport-people-thumbnail.png"),
-        prompt: PromptStore.background,
-        output_format: "png",
-      };
-      
-      const response = await axios.postForm(
-        `https://api.stability.ai/v2beta/stable-image/edit/inpaint`,
-        axios.toFormData(payload, new FormData()),
-        {
-          validateStatus: undefined,
-          responseType: "arraybuffer",
-          headers: { 
-            Authorization: `Bearer ${process.env.STABILITY_AI_API_KEY}`, 
-            Accept: "image/*" 
-          },
-        },
-      );
-      
-      if(response.status === 200) {
-        fs.writeFileSync("./edit.png", Buffer.from(response.data));
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error generating image:", error.message);
       } else {
-        throw new Error(`${response.status}: ${response.data.toString()}`);
+        console.error("An unknown error occurred:", error);
       }
-
-    } catch (error ) {
-      console.error("Error generating image:", error.message);
       throw error;
     }
   
   }
 
 
-}
+
 
 //node invocations to test functions
 
@@ -236,4 +267,3 @@ const stabilityController = {
 // stabilityController.generateText2Image()
 //   .catch((err) => console.error("Failed to generate image:", err));
 
-export default stabilityController;
