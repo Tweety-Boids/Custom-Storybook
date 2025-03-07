@@ -2,7 +2,7 @@ import express from "express";
 import bookController from "../controllers/bookController.ts";
 import { OpenAIChat, OpenAIEmbedding } from "../controllers/openaiController.ts";
 import { upsertDataToPinecone } from "../controllers/pineconeController.ts";
-import stabilityController from "../controllers/stabilityController.js";
+import { generateText2Image, generatePageImages } from "../controllers/stabilityController.ts";
 
 const bookRouter = express.Router();
 
@@ -13,7 +13,7 @@ bookRouter.get("/", bookController.getBooks, (req, res) => {
 bookRouter.post("/", 
   bookController.postBook, 
   OpenAIChat, 
-  stabilityController.generateText2Image,
+  generateText2Image,
   OpenAIEmbedding, 
   // upsertDataToPinecone, 
   (req, res) => {
