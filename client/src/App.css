@@ -50,9 +50,7 @@ body {
 }
 
 .book-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @apply flex-col h-[400px] hover:bg-red-500 ;
   gap: 10px;
 }
 

@@ -1,4 +1,4 @@
-import {ActionTypes} from "../../context/GlobalContext";
+import { ActionTypes } from "../../context/GlobalContext";
 import useGlobalContext from "../../hooks/useGlobalContext";
 
 import BookCreator from "../books/BookCreator";
@@ -6,10 +6,8 @@ import CharacterCreator from "../characters/CharacterCreator";
 
 const StoryPanel = () => {
   const { state, dispatch } = useGlobalContext();
-  const {showBookCreator, showCharacterCreator} = state;
-  console.log("showBookCreator", showBookCreator);
-  console.log("showCharacterCreator", showCharacterCreator);
-  
+  const { showBookCreator, showCharacterCreator } = state;
+
   const toggleBookCreator = () => {
     dispatch({
       type: ActionTypes.TOGGLE_BOOK_CREATOR,

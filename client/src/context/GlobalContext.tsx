@@ -41,9 +41,13 @@ interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
-  showBookCreator: false,
+  showBookCreator: true,
   showCharacterCreator: false,
-  bookList: [], // array of objects: book_id, book_title, book_cover
+  bookList: [{
+    metadata: {title: "Test Book Title"},
+    generatedStory: [],
+    coverImgUrl: ''
+  }], // array of objects: book_id, book_title, book_cover
   characterList: [], // array of objects: character_id, *character_info*
 };
 
@@ -74,6 +78,10 @@ const reducer = (
       case ActionTypes.GET_BOOKS:
         // console.log("FETCHED BOOKS", action.payload);
         draft.bookList = action.payload;
+        break;
+      case ActionTypes.GET_BOOK:
+        console.log("FETCHED BOOK", action.payload);
+        // draft.bookList = action.payload;
         break;
       case ActionTypes.CREATE_BOOK:
         const newBook = action.payload;
@@ -107,11 +115,11 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   // extract state and dispatch from useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
   // populate state on initial render
-  // useEffect(() => {
-  //   // fetch books and characters
+  useEffect(() => {
+    // fetch books and characters
 
-  //   getBooks()(dispatch);
-  // }, []);
+    // getBooks()(dispatch);
+  }, []);
 
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>

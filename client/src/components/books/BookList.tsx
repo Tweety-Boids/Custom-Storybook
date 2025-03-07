@@ -15,7 +15,15 @@ const BookList = () => {
       <div className="book-list-wrapper">
         {bookList &&
           bookList.map((book) => {
-            return <Book key={book.id} title={book.title} />;
+            const { metadata, generatedStory, coverImgUrl } = book;
+            return (
+              <Book
+                key={book.id}
+                title={metadata.title}
+                coverImg={coverImgUrl}
+                storyText={generatedStory}
+              />
+            );
           })}
       </div>
     </>
