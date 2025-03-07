@@ -35,7 +35,75 @@ const PromptStore = {
 
 }
 
+const testStory = [
+  "Lena had always been an adventurous girl, but she never expected her curiosity to lead her somewhere truly extraordinary. One afternoon, while exploring the overgrown fields behind her grandmother’s cottage, she leaned too far over the edge of an old stone well. The ground beneath her feet crumbled, and with a gasp, she tumbled into the darkness below. Instead of hitting cold water or solid stone, she landed softly on a bed of glowing moss, her fall cushioned as if by magic itself.",
+  
+  "As she stood up, Lena realized she was no longer in the well but in a vast underground world bathed in golden light. Towering mushrooms pulsed with bioluminescence, and streams of liquid silver wound through meadows of shimmering blue grass. Strange, melodic whispers floated in the air, carried by an unseen wind. A small, fox-like creature with wings hovered nearby, its emerald eyes twinkling with mischief. 'You must be the new traveler,' it said with a grin, its voice like the chime of tiny bells.",
+  
+  "Before Lena could ask where she was, the ground beneath her feet trembled, and the fox-creature’s ears twitched. 'The Queen of Echoes will want to see you,' it said hurriedly. 'She’s been waiting for someone like you to arrive.' Lena had no choice but to follow as the creature darted through a tunnel of glowing vines. As they emerged into a vast, open palace of crystal, Lena saw a figure sitting upon a throne of woven starlight—a woman with silver hair and eyes that held entire galaxies within them.",
+  
+  "The Queen studied Lena with a knowing smile. 'You are here because your heart is open to wonder,' she said. 'And in this land, wonder is power.' With a wave of her hand, a golden key appeared in Lena’s palm. 'This key unlocks the path between your world and ours. Use it wisely.' As the vision of the crystal palace began to fade, Lena found herself back at the edge of the well, the golden key clutched tightly in her hand. She knew her adventure was only just beginning."
+]
+ 
+
 const stabilityController = {
+
+  async generatePageImages (req, res, next) {
+
+    try {
+      const storyArray = testStory;
+  
+      await Promise.all(storyArray.map(async (element, page) =>  {
+
+        const payload = {
+          prompt: `a black and white turn of the century book illustration of the following plot: ${element}` ,
+          output_format: "jpeg",
+          aspect_ratio: "1:1",
+          style_preset: "line-art",
+        };
+        // console.log ('Page: ', page);
+        // console.log (element);
+
+        const response = await axios.postForm(
+          `https://api.stability.ai/v2beta/stable-image/generate/core`,
+          axios.toFormData(payload, new FormData()),
+          {
+            validateStatus: undefined,
+            responseType: "arraybuffer",
+            headers: { 
+              Authorization: `Bearer ${process.env.STABILITY_AI_API_KEY}`, 
+              Accept: "image/*" 
+            },
+          },
+        );
+
+        if(response.status === 200) {
+          //test line while not using locals
+          fs.writeFileSync(`./test_${page}.jpeg`, Buffer.from(response.data));
+          // fs.writeFileSync(`./${res.locals.userQuery.title || 'test' }_${page}.jpeg`, Buffer.from(response.data));
+          console.log (response.status, "we have finished generating the image");
+          
+          //mark in when using proper end points
+          // res.locals.userQuery.img_id = `${res.locals.userQuery.title}_${page}.jpeg`;
+          // console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
+        } else {
+          throw new Error(`*******${response.status}: ${response.data.toString()}`);
+        }
+
+
+      }));
+
+
+      next();
+
+
+
+    } catch (error) {
+      console.error("Error generating image:", error.message);
+      throw error;
+    }
+
+  },
 
   async generateText2Image(req, res, next) {
 
@@ -50,7 +118,7 @@ const stabilityController = {
       console.log("IMAGE PROMPT: ", payload);
 
       const response = await axios.postForm(
-        `https://api.stability.ai/v2beta/stable-image/generate/sd3`,
+        `https://api.stability.ai/v2beta/stable-image/generate/core`,
         axios.toFormData(payload, new FormData()),
         {
           validateStatus: undefined,
@@ -70,7 +138,7 @@ const stabilityController = {
 
         next();
         // res.locals.image = Buffer.from(response.data);
-
+        
       } else {
         throw new Error(`*******${response.status}: ${response.data.toString()}`);
       }
@@ -78,6 +146,7 @@ const stabilityController = {
       console.error("Error generating image:", error.message);
       throw error;
     }
+
   },
 
 
@@ -160,6 +229,7 @@ const stabilityController = {
 
 }
 
+stabilityController.generatePageImages()
 
 // stabilityController.generateText2Image()
 //   .catch((err) => console.error("Failed to generate image:", err));
