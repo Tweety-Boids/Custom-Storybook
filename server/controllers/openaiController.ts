@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { ServerError } from "../../types/types";
 import OpenAI from "openai";
 import "dotenv/config";
-
+import { Book } from "../model/bookModel.ts";
 export const OpenAIEmbedding: RequestHandler = async (_req, res, next) => {
   console.log("CONTROLLER: OpenAIEmbedding");
   const { generatedStory } = res.locals;
@@ -141,6 +141,8 @@ export const OpenAIChat: RequestHandler = async (_req, res, next) => {
     const aiResponse = completion.choices[0].message;
     // console.clear();
     console.log("1.AI Generated Story:\n", aiResponse.content);
+    // save generated story to existing book model
+    const book = await Book.findByIdAndUpdate(metadata._id, { story: aiResponse.content });
     res.locals.generatedStory = aiResponse.content as string;
     console.log("OpenAIChat: res.locals.generatedStory: ", res.locals.generatedStory);
     // console.log("2. Story recommendation:", res.locals.generatedStory);

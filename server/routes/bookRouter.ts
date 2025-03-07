@@ -1,6 +1,9 @@
 import express from "express";
 import bookController from "../controllers/bookController.ts";
-import { OpenAIChat, OpenAIEmbedding } from "../controllers/openaiController.ts";
+import {
+  OpenAIChat,
+  OpenAIEmbedding,
+} from "../controllers/openaiController.ts";
 import { upsertDataToPinecone } from "../controllers/pineconeController.ts";
 import stabilityController from "../controllers/stabilityController.js";
 // import fs from 'fs';
@@ -8,7 +11,6 @@ import stabilityController from "../controllers/stabilityController.js";
 
 // const spiritedAwayImg = fs.readFileSync(path.join(__dirname, '../SpiritedAway.jpeg'));
 // const spiritedAwayBase64 = `data:image/jpeg;base64,${spiritedAwayImg.toString('base64')}`;
-
 
 //mocked data import to work with front end rendering - to be removed later
 const mockGeneratedStory: string[] = [
@@ -21,7 +23,7 @@ const mockGeneratedStory: string[] = [
   "With her heart full of newfound magic and joy, Chihiro faced the night sky, where the curse lay hidden. She sprinkled the Glade's petals, giggled with the brook's laughter, and made a wish upon the sparkling stars.",
   "And with a glow of vibrant magic, the curse lifted! Her parents, restored from their creature forms, hugged Chihiro tight, grateful for her courage and the love that had guided her.",
   "Together, Chihiro and her family made their way back through the tunnel, returning home with memories of the Spirit World and a heart full of courage. Chihiro never forgot that day, and every now and then, when the stars twinkled just right, she could almost hear the whispers of the spirits on the warm, gentle breeze.",
-];// end mock data import
+]; // end mock data import
 
 const bookRouter = express.Router();
 
@@ -29,22 +31,23 @@ bookRouter.get("/", bookController.getBooks, (req, res) => {
   res.status(200).json(res.locals.books);
 });
 
-bookRouter.post("/", 
-  bookController.postBook, // res.locals.metadata; pulls the metadata from req.body
+bookRouter.post(
+  "/",
+  bookController.postBook, // res.locals.metadata; pulls the metadata from req.body; creates a new book in the database
   // here we should generate the cover
-  // initialize record in mongoDB
-  // OpenAIChat, // res.local.generatedStory; generates the story text
+  OpenAIChat, // res.local.generatedStory; generates the story text; updates the book model with the generated story
   // stabilityController.generateText2Image,  generates the story images of each page after story is returned in an array
-  // OpenAIEmbedding, // res.locals.embedding; generates the embedding
-  // upsertDataToPinecone, 
+  OpenAIEmbedding, // res.locals.embedding; generates the embedding
+  upsertDataToPinecone,
   (req, res) => {
     const response = {
       metadata: res.locals.metadata,
       generatedStory: mockGeneratedStory,
       coverImgUrl: "testUrl",
-    }
-  // res.status(200).json(res.locals.generatedStory);
-  res.status(200).json(response);
-});
+    };
+    // res.status(200).json(res.locals.generatedStory);
+    res.status(200).json(response);
+  },
+);
 
 export default bookRouter;

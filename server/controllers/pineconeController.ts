@@ -19,26 +19,31 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
   console.log("CONTROLLER: upsertDataToPinecone");
   //res locals embedding and story from OAI
   const { metadata, generatedStory, embedding } = res.locals;
-console.log('initialize single upsert', );
-// prep metadata for upsert (stringify arrays)
-// console.log('METADATA TO UPSERT', metadata);
-// Add this conversion before the upsert
-// if (metadata.characters && Array.isArray(metadata.characters)) {
-//   // Convert number array to string array for Pinecone
-//   metadata.characters = metadata.characters.map(String);
-// }
+  console.log("initialize single upsert");
+  // prep metadata for upsert (stringify arrays)
+  // console.log('METADATA TO UPSERT', metadata);
+  // Add this conversion before the upsert
+  // if (metadata.characters && Array.isArray(metadata.characters)) {
+  //   // Convert number array to string array for Pinecone
+  //   metadata.characters = metadata.characters.map(String);
+  // }
+  const { _id } = metadata;
+  console.log("METADATA TO UPSERT", metadata.metadata);
 
-console.log('METADATA TO UPSERT', metadata);
+  await index.upsert([
+    {
+      id: _id,
+      values: embedding,
+      metadata: {
+        ...metadata.metadata,
+        generatedStory: generatedStory,
+      },
+    },
+  ]);
 
-  await index.upsert([{
-        id: '1234', //??? how to generate unique id?
-        values: embedding, // your vector values
-        metadata: metadata
-    }]);
-
-    console.log('upsert complete?');
-    return next();
-  }
+  console.log("UPSERT COMPLETE ");
+  return next();
+};
 
 //   const realAzzMetadata: EmbeddingData = {
 //     story: metadata,
@@ -140,26 +145,24 @@ console.log('METADATA TO UPSERT', metadata);
 // };
 
 export const getAllBooks: RequestHandler = async (_req, res, next) => {
-
   const index = pc.index("stories");
 
   // list as pages of book results vvv
   const results = await index.listPaginated();
 
-  console.log('List of all books: ', results.vectors);
+  console.log("List of all books: ", results.vectors);
 
   // you can turn to next page of book results vvv
   // await index.listPaginated({prefix: 'dox1#', paginationToken: results.pagination.next});
 
   res.locals.allBooks = results;
   return next();
-}
-
+};
 
 //fetch from pinecone by element id for the bookshelf
 export const queryPineconeById: RequestHandler = async (req, res, next) => {
-  const {bookID} = req.body;
-  const fakeId = '1234'
+  const { bookID } = req.body;
+  const fakeId = "1234";
   // To get the unique host for an index,
   // see https://docs.pinecone.io/guides/data/target-an-index
   const index = pc.index("stories");
@@ -168,8 +171,8 @@ export const queryPineconeById: RequestHandler = async (req, res, next) => {
     // .namespace("example-namespace")
     .fetch([fakeId]);
 
-  res.locals.idBooks = fetchResult
-  console.log('Fetch Book by id:', fetchResult);
+  res.locals.idBooks = fetchResult;
+  console.log("Fetch Book by id:", fetchResult);
   return next();
 };
 
