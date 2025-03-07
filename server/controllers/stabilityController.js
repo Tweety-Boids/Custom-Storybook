@@ -79,13 +79,13 @@ const stabilityController = {
 
         if(response.status === 200) {
           //test line while not using locals
-          fs.writeFileSync(`./test_${page}.jpeg`, Buffer.from(response.data));
-          // fs.writeFileSync(`./${res.locals.userQuery.title || 'test' }_${page}.jpeg`, Buffer.from(response.data));
+          // fs.writeFileSync(`./test_${page}.jpeg`, Buffer.from(response.data));
+          fs.writeFileSync(`./${res.locals.userQuery.title || 'test' }_${page}.jpeg`, Buffer.from(response.data));
           console.log (response.status, "we have finished generating the image");
           
           //mark in when using proper end points
-          // res.locals.userQuery.img_id = `${res.locals.userQuery.title}_${page}.jpeg`;
-          // console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
+          res.locals.userQuery.img_id = `${res.locals.userQuery.title}_${page}.jpeg`;
+          console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
         } else {
           throw new Error(`*******${response.status}: ${response.data.toString()}`);
         }
@@ -229,7 +229,9 @@ const stabilityController = {
 
 }
 
-stabilityController.generatePageImages()
+//node invocations to test functions
+
+// stabilityController.generatePageImages()
 
 // stabilityController.generateText2Image()
 //   .catch((err) => console.error("Failed to generate image:", err));
