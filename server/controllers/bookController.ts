@@ -7,13 +7,14 @@ bookController.postBook = async (
   res: Response<any>,
   next: NextFunction,
 ): Promise<void> => {
+  console.log("CONTROLLER: postBook");
   try {
+    console.log("postBook: req.body", req.body);
     const { title, author, setting, plot, characters, artStyle, genre } = req.body;
-  
     // add if statement to check missing properties
   
-    res.locals.userQuery = { title, author, setting, plot, characters, artStyle, genre };
-    console.log(res.locals.userQuery);
+    res.locals.metadata = { title, author, setting, plot, characters, artStyle, genre };
+    console.log("postBook: res.locals.metadata", res.locals.metadata);
     next();
 
   } catch (error: any) {

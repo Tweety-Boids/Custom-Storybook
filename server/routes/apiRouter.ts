@@ -7,9 +7,9 @@ import charactersRouter from "./charactersRouter.ts";
 const apiRouter = express.Router();
 
 apiRouter.use("/", pineconeRouter);
+apiRouter.use("/", openaiRouter);
 apiRouter.use("/books", bookRouter);
 // apiRouter.use('/scenes');
 // apiRouter.use('/image');
-apiRouter.use("/", openaiRouter);
 apiRouter.use("/characters", charactersRouter);
 export { apiRouter };
