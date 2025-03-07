@@ -44,6 +44,12 @@ const CharacterCreator = () => {
           value={characterDetails.age}
           onChange={handleChange}
         />
+        <TextInput
+          label="Species"
+          name="species"
+          value={characterDetails.species}
+          onChange={handleChange}
+        />
         <Dropdown
           label="Pronouns"
           name="pronouns"
