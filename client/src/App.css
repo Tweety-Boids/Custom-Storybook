@@ -45,6 +45,7 @@ body {
 
 .book-list-wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 50px;
   padding: 20px;
 }

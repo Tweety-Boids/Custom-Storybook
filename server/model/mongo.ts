@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'; 
+import { Book } from './bookModel';
 import { ServerApi, Characters, Images } from '../../types/types';
 
 dotenv.config();

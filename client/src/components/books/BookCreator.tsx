@@ -35,7 +35,7 @@ const BookCreator = () => {
   const handleCreateBook = async () => {
     try {
       console.log("createBook button clicked");
-      await createBookAction(mockBookForPostRequest)(dispatch);
+      await createBookAction(bookDetails)(dispatch);
     } catch (error) {
       console.error("Error creating book:", error);
     }

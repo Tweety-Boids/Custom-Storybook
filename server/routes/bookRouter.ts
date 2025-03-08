@@ -31,7 +31,8 @@ bookRouter.post(
   bookController.postBook, // res.locals.metadata; pulls the metadata from req.body; creates a new book in the database
   // here we should generate the cover
   OpenAIChat, // res.local.generatedStory; generates the story text; updates the book model with the generated story
-  // generateText2Image,  generates the story images of each page after story is returned in an array
+  generateText2Image, // generates the story images of each page after story is returned in an array
+  // generatePageImages,  
   OpenAIEmbedding, // res.locals.embedding; generates the embedding
   upsertDataToPinecone,
   (req, res) => {

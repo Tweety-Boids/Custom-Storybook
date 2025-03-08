@@ -11,8 +11,8 @@ const bookSchema = new mongoose.Schema({
     genre: String,
 },
 // ai generated items
-  coverImg: String,
-  bookImgs: [String],
+  coverImg: {name: String, data: Buffer, contentType: String},
+  bookImgs: [{name: String, data: Buffer, contentType: String}],
   story: [String],
 });
 
