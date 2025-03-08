@@ -13,7 +13,7 @@ interface DropdownProps {
 const Dropdown = ({ label, name, value, options, onChange }: DropdownProps) => {
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-xl">
         <label htmlFor={name}>{label}: </label>
         <select
           name={name}

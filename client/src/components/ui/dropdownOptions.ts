@@ -131,6 +131,45 @@ const genres = [
 
 const artStyles = [
   {
+    value: "3d-model",
+    label: "3D Model",
+  },
+  {
+    value: "analog-film",
+    label: "Analog Film",
+  },
+  {
+    value: "anime",
+    label: "Anime",
+  },
+  {
+    value: "cinematic",
+    label: "Cinematic",
+  },
+  {
+    value: "comic-book",
+    label: "Comic Book",
+  },
+  {
+    value: "fantasy-art",
+    label: "Fantasy",
+  },
+  {
+    value: "line-art",
+    label: "Line Art",
+  },
+  {
+    value: "neon-punk",
+    label: "Neon Punk",
+  },
+  {
+    value: "photographic",
+    label: "Photographic",
+  },
+]
+
+const artStylesALT = [
+  {
     value: "abstractExperimental",
     label: "Abstract/Experimental",
     description: "Non-traditional layouts, surreal imagery.",

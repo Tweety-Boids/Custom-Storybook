@@ -43,14 +43,12 @@ const BookCreator = () => {
 
   return (
     <>
-      <div className="flex">
-        <h3>Compose a story</h3>
+      <div className="flex items-center gap-5">
+        <h3 className="text-2xl">Compose your story</h3>
         <button onClick={handleCreateBook}>Scribe</button>
       </div>
 
-      {/* <h3>Build a Book</h3> */}
       <div className="book-creator-wrapper"></div>
-      {/* <div onClick={createBook}>Create Book:</div> */}
       <TextInput
         label="Title"
         name="title"
@@ -90,7 +88,7 @@ const BookCreator = () => {
         options={optionList.genres}
         onChange={handleChange}
       />
-      <CharacterList />
+      {/* <CharacterList /> */}
     </>
   );
 };

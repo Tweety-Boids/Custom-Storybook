@@ -69,7 +69,7 @@ export const OpenAIEmbedding: RequestHandler = async (_req, res, next) => {
 export const OpenAIChat: RequestHandler = async (_req, res, next) => {
   console.log("CONTROLLER: OpenAIChat");
   //TODO: uncomment this after we get everything working
-  const { metadata, pineconeQueryResult } = res.locals;
+  const { bookId, metadata, pineconeQueryResult } = res.locals;
   // console.log("OpenAIChat: userQuery", userQuery);
   // if (!userQuery) {
   //   const error: ServerError = {
@@ -140,10 +140,10 @@ export const OpenAIChat: RequestHandler = async (_req, res, next) => {
     // pull generated story from openai
     const aiResponse = completion.choices[0].message;
     // console.clear();
-    console.log("1.AI Generated Story:\n", aiResponse.content);
+    // console.log("1.AI Generated Story:\n", aiResponse.content);
     // save generated story to existing book model
-    const book = await Book.findByIdAndUpdate(metadata._id, { story: aiResponse.content });
     res.locals.generatedStory = aiResponse.content as string;
+    const book = await Book.findByIdAndUpdate( bookId, { story: res.locals.generatedStory });
     console.log("OpenAIChat: res.locals.generatedStory: ", res.locals.generatedStory);
     // console.log("2. Story recommendation:", res.locals.generatedStory);
     // console.groupEnd();

@@ -11,7 +11,7 @@ interface TextInputProps {
 const TextInput = ({ label, name, value, size, onChange }: TextInputProps) => {
   return (
     <div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-xl">
         <label htmlFor={name}>{label}:</label>
         {!size ? (
           <input

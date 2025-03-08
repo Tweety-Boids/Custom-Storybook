@@ -3,12 +3,15 @@ import Dropdown from "../ui/Dropdown";
 import TextInput from "../ui/TextInput";
 import * as optionList from "../ui/dropdownOptions";
 import CharacterList from "./CharacterList";
-import { mockHumanCharacterForPostRequest, mockFantasyCharacterForPostRequest } from "../../utils/mockData";
+import {
+  mockHumanCharacterForPostRequest,
+  mockFantasyCharacterForPostRequest,
+} from "../../utils/mockData";
 
 const CharacterCreator = () => {
   const [characterDetails, setCharacterDetails] = useState({
     ...mockHumanCharacterForPostRequest,
-  });  
+  });
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -28,8 +31,8 @@ const CharacterCreator = () => {
 
   return (
     <>
-      <div className="flex">
-        <h3>Create a character</h3>
+      <div className="flex items-center gap-5">
+        <h3 className="text-2xl">Create a character</h3>
         <button onClick={createCharacter}>Awaken</button>
       </div>
       <div className="character-creator-wrapper">
@@ -98,7 +101,7 @@ const CharacterCreator = () => {
           value={characterDetails.catchPhrase}
           onChange={handleChange}
         />
-        <CharacterList />
+        {/* <CharacterList /> */}
       </div>
     </>
   );
