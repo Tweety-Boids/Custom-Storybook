@@ -25,8 +25,8 @@ bookController.postBook = async (
     // add if statement to check missing properties
     const newBook = await Book.create({ metadata: bookMetadata });
     // console.log("postBook: newBook", newBook);
-
-    res.locals.metadata = newBook;
+    res.locals.bookId = newBook._id;
+    res.locals.metadata = { ...newBook.metadata };
     console.log("postBook: res.locals.metadata", res.locals.metadata);
     next();
   } catch (error: any) {

@@ -14,13 +14,20 @@ const BookList = () => {
       <div className="book-list-wrapper">
         {bookList &&
           bookList.map((book, index) => {
-            const { _id, metadata, generatedStory, coverImgUrl } = book;
+            const { metadata, generatedStory } = book;
+            // console.log('BOOK METADATA',metadata)
+            
+            // const coverImgData = book.coverImg?.data.data
+            const coverImgData = book.coverImg?.data?.data 
+            ? Array.from(book.coverImg.data.data)
+            : null;
+
             return (
               <Book
                 key={index}
                 title={metadata.title}
-                coverImg={coverImgUrl}
-                storyText={generatedStory}
+                coverImg={coverImgData}
+                storyText={ book.coverImg?.data}
               />
             );
           })}

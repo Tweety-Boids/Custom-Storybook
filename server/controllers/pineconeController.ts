@@ -18,17 +18,17 @@ const index = pc.index<StoryMetadata>("stories");
 export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
   console.log("CONTROLLER: upsertDataToPinecone");
   //res locals embedding and story from OAI
-  const { metadata, generatedStory, embedding } = res.locals;
-  const { _id } = metadata;
+  const { bookId, metadata, generatedStory, embedding } = res.locals;
+  // const { id } = metadata;
   console.log("initialize single upsert");
-  console.log("METADATA TO UPSERT", metadata.metadata);
+  console.log("METADATA TO UPSERT", metadata);
 
   await index.upsert([
     {
-      id: _id,
+      id: bookId,
       values: embedding,
       metadata: {
-        ...metadata.metadata,
+        ...metadata,
         generatedStory: generatedStory,
       },
     },
