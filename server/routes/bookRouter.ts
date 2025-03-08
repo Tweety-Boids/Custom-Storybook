@@ -5,12 +5,7 @@ import {
   OpenAIEmbedding,
 } from "../controllers/openaiController.ts";
 import { upsertDataToPinecone } from "../controllers/pineconeController.ts";
-import stabilityController from "../controllers/stabilityController.js";
-// import fs from 'fs';
-// import path from 'path';
-
-// const spiritedAwayImg = fs.readFileSync(path.join(__dirname, '../SpiritedAway.jpeg'));
-// const spiritedAwayBase64 = `data:image/jpeg;base64,${spiritedAwayImg.toString('base64')}`;
+import { generateText2Image, generatePageImages } from "../controllers/stabilityController.ts";
 
 //mocked data import to work with front end rendering - to be removed later
 const mockGeneratedStory: string[] = [
@@ -36,7 +31,7 @@ bookRouter.post(
   bookController.postBook, // res.locals.metadata; pulls the metadata from req.body; creates a new book in the database
   // here we should generate the cover
   OpenAIChat, // res.local.generatedStory; generates the story text; updates the book model with the generated story
-  // stabilityController.generateText2Image,  generates the story images of each page after story is returned in an array
+  // generateText2Image,  generates the story images of each page after story is returned in an array
   OpenAIEmbedding, // res.locals.embedding; generates the embedding
   upsertDataToPinecone,
   (req, res) => {
