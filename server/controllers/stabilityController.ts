@@ -185,9 +185,10 @@ export const generatePageImages: RequestHandler = async (req, res, next) => {
 
 export const generateText2Image: RequestHandler = async (req, res, next) => {
   console.log("CONTROLLER STABILITY TEXT2IMAGE = COVER GENERATION");
+  const { bookId, metadata } = res.locals;
   try {
     const payload: ImagePayload = {
-      prompt: `a book cover for a story with the plot summary: ${res.locals.metadata.plot}`,
+      prompt: `a book cover for a story with the plot summary: ${metadata.plot}`,
       output_format: "jpeg",
       aspect_ratio: "9:16",
     };
@@ -208,40 +209,40 @@ export const generateText2Image: RequestHandler = async (req, res, next) => {
     );
     if (response.status === 200) {
       // find book in db
-      const currentBook = await Book.findOne({ id: res.locals.metadata.id });
-      console.log("CURRENT BOOK", currentBook);
-      if (currentBook) {
-        currentBook.coverImg = {
-          name: `${res.locals.metadata.title}_Cover.jpeg`,
+      const book = await Book.findByIdAndUpdate(bookId, {
+        coverImg: {
+          name: `${metadata.title}_Cover.jpeg`,
           data: Buffer.from(response.data),
           contentType: "image/jpeg",
-        };
-        await currentBook.save();
-      } else {
-        throw new Error(`Book not found`);
-      }
-
-      console.log(response.status, "Image saved to MongoDB");
-
-      // res.locals.metadata.cover_id = newImage._id.toString();
-
-      //OLD LOGIC
-      // fs.writeFileSync(
-      //   `./${res.locals.userQuery?.title}.jpeg`,
-      //   Buffer.from(response.data),
-      // );
-      // console.log(response.status, "we have finished generating the image");
-
-      // res.locals.userQuery.img_id = `${res.locals.userQuery?.title}.jpeg`;
-      // console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
-
-      //END OLD LOGIC
-
-      next();
-      // res.locals.image = Buffer.from(response.data);
+        },
+      });
+      res.locals.coverImg = book?.coverImg;
+      console.log("CURRENT BOOK", book);
     } else {
-      throw new Error(`*******${response.status}: ${response.data.toString()}`);
+      throw new Error(`Book not found`);
     }
+
+    // console.log(response.status, "Image saved to MongoDB");
+
+    // res.locals.metadata.cover_id = newImage._id.toString();
+
+    //OLD LOGIC
+    // fs.writeFileSync(
+    //   `./${res.locals.userQuery?.title}.jpeg`,
+    //   Buffer.from(response.data),
+    // );
+    // console.log(response.status, "we have finished generating the image");
+
+    // res.locals.userQuery.img_id = `${res.locals.userQuery?.title}.jpeg`;
+    // console.log("COMPLETED IMG GEN: ", res.locals.userQuery);
+
+    //END OLD LOGIC
+
+    next();
+    // res.locals.image = Buffer.from(response.data);
+    // } else {
+    //   throw new Error(`*******${response.status}: ${response.data.toString()}`);
+    // }
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error generating image:", error.message);

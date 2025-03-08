@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <DevPanel />
+      {/* <DevPanel /> */}
       <MainDiv />
     </>
   );

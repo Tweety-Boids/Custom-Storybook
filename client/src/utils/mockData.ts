@@ -86,3 +86,113 @@ export const mockCharactersFromGetRequest = [
 export const mockGeneratedStory: string[] = [
   // ... existing code ...
 ];
+
+
+export const classicChildrenBooks = [
+  {
+    title: "Where the Wild Things Are",
+    author: "Maurice Sendak",
+    setting: "Max's Bedroom/Fantasy Island",
+    plot: "A mischievous young boy named Max is sent to bed without dinner and imagines sailing to an island where he becomes king of the Wild Things.",
+    characters: ["Max", "The Wild Things"],
+    artStyle: "Picture Book",
+    genre: "Fantasy",
+  },
+  {
+    title: "Charlotte's Web",
+    author: "E.B. White",
+    setting: "Zuckerman's Farm",
+    plot: "A spider named Charlotte helps save her friend Wilbur the pig from being slaughtered by writing messages in her web.",
+    characters: ["Charlotte", "Wilbur", "Fern", "Templeton"],
+    artStyle: "Classic Illustration",
+    genre: "Children's Literature",
+  },
+  {
+    title: "Harry Potter and the Sorcerer's Stone",
+    author: "J.K. Rowling",
+    setting: "Hogwarts School of Witchcraft and Wizardry",
+    plot: "An orphaned boy discovers he's a wizard and begins his journey at a magical school while uncovering the truth about his parents' death.",
+    characters: ["Harry Potter", "Ron Weasley", "Hermione Granger", "Albus Dumbledore"],
+    artStyle: "Novel",
+    genre: "Fantasy",
+  },
+  {
+    title: "Aladdin",
+    author: "Traditional/Disney Adaptation",
+    setting: "Agrabah",
+    plot: "A street urchin finds a magical lamp containing a genie and uses his wishes to win the heart of a princess while facing the evil vizier Jafar.",
+    characters: ["Aladdin", "Jasmine", "Genie", "Jafar"],
+    artStyle: "3D Model",
+    genre: "Fantasy Adventure",
+  },
+  {
+    title: "Alice in Wonderland",
+    author: "Lewis Carroll",
+    setting: "Wonderland",
+    plot: "A young girl falls through a rabbit hole into a fantastical world filled with peculiar creatures and bizarre experiences.",
+    characters: ["Alice", "Mad Hatter", "White Rabbit", "Queen of Hearts"],
+    artStyle: "Neon Punk",
+    genre: "Fantasy",
+  },
+  {
+    title: "The Secret Garden",
+    author: "Frances Hodgson Burnett",
+    setting: "Misselthwaite Manor, Yorkshire",
+    plot: "A spoiled orphan girl discovers a hidden garden and helps restore it and her sickly cousin to health.",
+    characters: ["Mary Lennox", "Colin Craven", "Dickon", "Martha"],
+    artStyle: "Neon Punk",
+    genre: "Children's Literature",
+  },
+  {
+    title: "The Jungle Book",
+    author: "Rudyard Kipling",
+    setting: "Indian Jungle",
+    plot: "A human boy named Mowgli is raised by wolves in the jungle and learns life lessons from various animal mentors.",
+    characters: ["Mowgli", "Baloo", "Bagheera", "Shere Khan"],
+    artStyle: "Analog Film",
+    genre: "Adventure",
+  },
+  {
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    setting: "Middle-earth",
+    plot: "A hobbit named Bilbo Baggins joins a group of dwarves on an epic quest to reclaim their mountain home from a fearsome dragon.",
+    characters: ["Bilbo Baggins", "Gandalf", "Thorin Oakenshield", "Smaug"],
+    artStyle: "comic-book",
+    genre: "Fantasy",
+  },
+];
+
+
+/*
+Picture Books (Ages 3-7):
+"Where the Wild Things Are" by Maurice Sendak
+"The Very Hungry Caterpillar" by Eric Carle
+"Goodnight Moon" by Margaret Wise Brown
+"The Gruffalo" by Julia Donaldson
+"Green Eggs and Ham" by Dr. Seuss
+Early Chapter Books (Ages 6-9):
+"Magic Tree House" series by Mary Pope Osborne
+"Junie B. Jones" series by Barbara Park
+"Frog and Toad" series by Arnold Lobel
+"Charlotte's Web" by E.B. White
+"The Fantastic Mr. Fox" by Roald Dahl
+Middle Grade Books (Ages 8-12):
+"Harry Potter" series by J.K. Rowling
+"Percy Jackson" series by Rick Riordan
+"Wonder" by R.J. Palacio
+"Bridge to Terabithia" by Katherine Paterson
+"The One and Only Ivan" by Katherine Applegate
+Classic Children's Novels:
+"The Lion, the Witch and the Wardrobe" by C.S. Lewis
+"A Wrinkle in Time" by Madeleine L'Engle
+"The Hobbit" by J.R.R. Tolkien
+"Matilda" by Roald Dahl
+"The Secret Garden" by Frances Hodgson Burnett
+These books are known for their:
+Engaging storytelling
+Rich character development
+Important life lessons
+Beautiful illustrations (especially in picture books)
+Enduring appeal across generations
+*/

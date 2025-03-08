@@ -1,12 +1,14 @@
+import BookReader from "../books/BookReader";
+
 const Header = () => {
 
 
   return (
-    <div className="header-wrapper flex items-center p-4 text-accent-color">
-      <h1 className="text-3xl">Fable</h1>
-      {/* <div>
-        Search library: <input type="text" />
-      </div> */}
+    <div className="header-wrapper flex justify-between items-center p-4 pl-11 text-accent-color">
+      <h1 className="text-[50px] tracking-wide">Fable</h1>
+      <div className="text-2xl">
+        Search library: <input type="text" className="w-[400px]"/>
+      </div>
     </div>
   );
 };

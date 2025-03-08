@@ -14,6 +14,8 @@ interface ActionTypes {
   // TOGGLE_STORY_PANEL: string;
   TOGGLE_BOOK_CREATOR: string;
   TOGGLE_CHARACTER_CREATOR: string;
+  TOGGLE_BOOK_READER: string;
+  SET_CURRENT_BOOK: string;
   GET_BOOKS: string;
   GET_BOOK: string;
   CREATE_BOOK: string;
@@ -24,6 +26,8 @@ const ActionTypes: ActionTypes = {
   // TOGGLE_STORY_PANEL: "TOGGLE_STORY_PANEL",
   TOGGLE_BOOK_CREATOR: "TOGGLE_BOOK_CREATOR",
   TOGGLE_CHARACTER_CREATOR: "TOGGLE_CHARACTER_CREATOR",
+  TOGGLE_BOOK_READER: "TOGGLE_BOOK_READER",
+  SET_CURRENT_BOOK: "SET_CURRENT_BOOK",
   GET_BOOKS: "GET_BOOKS",
   GET_BOOK: "GET_BOOK",
   CREATE_BOOK: "CREATE_BOOK",
@@ -36,6 +40,8 @@ interface ApplicationState {
   // showStoryPanel: boolean;
   showBookCreator: boolean;
   showCharacterCreator: boolean;
+  showBookReader: boolean;
+  currentBook: any;
   bookList: any[]; // array of objects: book_id, book_title, book_cover
   characterList: any[]; // array of objects: character_id, *character_info*
 }
@@ -43,11 +49,15 @@ interface ApplicationState {
 const initialState: ApplicationState = {
   showBookCreator: true,
   showCharacterCreator: false,
-  bookList: [{
-    metadata: {title: "Test Book Title"},
-    generatedStory: [],
-    coverImgUrl: ''
-  }], // array of objects: book_id, book_title, book_cover
+  showBookReader: false,
+  currentBook: {
+    _id: "1",
+    metadata: { title: "Test Book Title" },
+    story: [],
+    coverImg: "",
+    bookImgs: [],
+  },
+  bookList: [], // array of objects: book_id, book_title, book_cover
   characterList: [], // array of objects: character_id, *character_info*
 };
 
@@ -74,6 +84,12 @@ const reducer = (
       case ActionTypes.TOGGLE_CHARACTER_CREATOR:
         draft.showBookCreator = false;
         draft.showCharacterCreator = action.payload;
+        break;
+      case ActionTypes.TOGGLE_BOOK_READER:
+        draft.showBookReader = action.payload;
+        break;
+      case ActionTypes.SET_CURRENT_BOOK:
+        draft.currentBook = action.payload;
         break;
       case ActionTypes.GET_BOOKS:
         // console.log("FETCHED BOOKS", action.payload);

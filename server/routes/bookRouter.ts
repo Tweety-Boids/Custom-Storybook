@@ -37,9 +37,10 @@ bookRouter.post(
   upsertDataToPinecone,
   (req, res) => {
     const response = {
+      _id: res.locals.bookId,
       metadata: res.locals.metadata,
       generatedStory: mockGeneratedStory,
-      coverImgUrl: "testUrl",
+      coverImgUrl: res.locals.coverImg.data
     };
     // res.status(200).json(res.locals.generatedStory);
     res.status(200).json(response);

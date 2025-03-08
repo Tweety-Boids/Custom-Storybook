@@ -14,27 +14,23 @@ body {
 }
 
 .header-wrapper {
-  @apply bg-main-color border-b-[8px] border-b-accent-color;
-  height: 90px;
+  @apply bg-main-color border-b-accent-color border-b-[8px];
+  height: 100px;
   /* make sticky */
 }
 
 .story-panel-wrapper {
-  @apply text-gray-50 bg-secondary-color border-r-[8px] border-r-accent-color;
+  @apply bg-secondary-color border-r-accent-color border-r-[8px] text-gray-50;
   @apply p-4;
-  width: 300px;
+  min-width: 400px;
 }
 .form-field-text {
-  @apply text-stone-900 px-2 py-1 rounded-lg
-  
+  @apply rounded-lg px-2 py-1 text-stone-900;
 }
 
-
 .main-div-wrapper {
-  @apply bg-stone-50;
-  /* background-color: #f1ead3; */
+  @apply flex bg-stone-50;
   height: 100vh;
-  display: flex;
 }
 
 .main-book-list-wrapper {
@@ -46,30 +42,38 @@ body {
 .book-list-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
   padding: 20px;
+  gap: 10px;
+  align-items: flex-start;
 }
 
+/* 
+display: grid;
+grid-template-row: repeat(auto-fill, minmax(200px, 1fr))
+*/
+
 .book-wrapper {
-  @apply flex-col h-[400px] hover:bg-red-500 ;
-  gap: 10px;
+  @apply flex h-[300px] w-[200px] flex-col items-center justify-center p-4;
+  @apply hover:bg-accent-color;
+  /* gap: 10px; */
 }
 
 .book-img-wrapper {
-  border: 1px solid blue;
   height: 200px;
   width: 150px;
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
 }
 
 button {
-  @apply bg-slate-700;
+  @apply bg-slate-700 text-2xl tracking-widest;
+  @apply hover:bg-accent-color hover:text-main-color;
   color: white;
   border: 1px solid white;
   padding: 10px;
 }
 
-button:hover {
-  background-color: blue;
+.book-title {
+  /* color: red */
+  @apply text-center h-[50px] mb-1;
 }
