@@ -11,44 +11,43 @@ import { produce } from "immer";
 import { getBooks } from "../actions/bookActions";
 // define DISPATCH ACTIONS
 interface ActionTypes {
-  TOGGLE_STORY_PANEL: string;
+  // TOGGLE_STORY_PANEL: string;
+  TOGGLE_BOOK_CREATOR: string;
+  TOGGLE_CHARACTER_CREATOR: string;
   GET_BOOKS: string;
   GET_BOOK: string;
-  TURN_PAGE: string;
   CREATE_BOOK: string;
-  DELETE_BOOK: string;
   GET_CHARACTERS: string;
   CREATE_CHARACTER: string;
-  DELETE_CHARACTER: string;
-  EDIT_CHARACTER: string;
-  // RATE_BOOK: string;
-  // RATE_PAGE: string;
 }
 const ActionTypes: ActionTypes = {
-  TOGGLE_STORY_PANEL: "TOGGLE_STORY_PANEL",
+  // TOGGLE_STORY_PANEL: "TOGGLE_STORY_PANEL",
+  TOGGLE_BOOK_CREATOR: "TOGGLE_BOOK_CREATOR",
+  TOGGLE_CHARACTER_CREATOR: "TOGGLE_CHARACTER_CREATOR",
   GET_BOOKS: "GET_BOOKS",
   GET_BOOK: "GET_BOOK",
-  TURN_PAGE: "TURN_PAGE",
   CREATE_BOOK: "CREATE_BOOK",
-  DELETE_BOOK: "DELETE_BOOK",
   GET_CHARACTERS: "GET_CHARACTERS",
-  CREATE_CHARACTER: "CREATE_CHARACTER,",
-  DELETE_CHARACTER: "DELETE_CHARACTER,",
-  EDIT_CHARACTER: "EDIT_CHARACTER,",
-  // RATE_BOOK: 'RATE_BOOK',
-  // RATE_PAGE: 'RATE_PAGE',
+  CREATE_CHARACTER: "CREATE_CHARACTER",
 };
 
 // define APPLICATION STATE
 interface ApplicationState {
-  showStoryPanel: boolean; // boolean to toggle side panel
+  // showStoryPanel: boolean;
+  showBookCreator: boolean;
+  showCharacterCreator: boolean;
   bookList: any[]; // array of objects: book_id, book_title, book_cover
   characterList: any[]; // array of objects: character_id, *character_info*
 }
 
 const initialState: ApplicationState = {
-  showStoryPanel: false, // boolean to toggle side panel
-  bookList: [], // array of objects: book_id, book_title, book_cover
+  showBookCreator: true,
+  showCharacterCreator: false,
+  bookList: [{
+    metadata: {title: "Test Book Title"},
+    generatedStory: [],
+    coverImgUrl: ''
+  }], // array of objects: book_id, book_title, book_cover
   characterList: [], // array of objects: character_id, *character_info*
 };
 
@@ -65,12 +64,24 @@ const reducer = (
 ): ApplicationState => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case ActionTypes.TOGGLE_STORY_PANEL:
-        draft.showStoryPanel = action.payload;
+      // case ActionTypes.TOGGLE_STORY_PANEL:
+      //   draft.showStoryPanel = action.payload;
+      //   break;
+      case ActionTypes.TOGGLE_BOOK_CREATOR:
+        draft.showCharacterCreator = false;
+        draft.showBookCreator = action.payload;
+        break;
+      case ActionTypes.TOGGLE_CHARACTER_CREATOR:
+        draft.showBookCreator = false;
+        draft.showCharacterCreator = action.payload;
         break;
       case ActionTypes.GET_BOOKS:
         // console.log("FETCHED BOOKS", action.payload);
         draft.bookList = action.payload;
+        break;
+      case ActionTypes.GET_BOOK:
+        console.log("FETCHED BOOK", action.payload);
+        // draft.bookList = action.payload;
         break;
       case ActionTypes.CREATE_BOOK:
         const newBook = action.payload;

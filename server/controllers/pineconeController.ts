@@ -4,29 +4,49 @@ import { Pinecone, PineconeRecord } from "@pinecone-database/pinecone";
 import "dotenv/config";
 import OpenAI from "openai";
 import { Embeddings } from "openai/resources/embeddings.mjs";
-
-const pc = new Pinecone({
-  apiKey: `${process.env.PINECONE_API_KEY}`,
-});
-
 interface EmbeddingData {
   story: StoryMetadata;
   embedding: OpenAI.Embedding["embedding"];
 }
 
-export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
-  //res locals embedding and story from OAI
-  const { embedding, metadata } = res.locals;
-  const realAzzMetadata: EmbeddingData = {
-    story: metadata,
-    embedding,
-  };
-  const index = pc.index<StoryMetadata>("stories");
+const pc = new Pinecone({
+  apiKey: `${process.env.PINECONE_API_KEY}`,
+});
 
-  //TODO: Fix this in order to upsert embedded books vvv
-  /**
-   * Generate Pinecone records from embeddings data.
-   */
+const index = pc.index<StoryMetadata>("stories");
+
+export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
+  console.log("CONTROLLER: upsertDataToPinecone");
+  //res locals embedding and story from OAI
+  const { metadata, generatedStory, embedding } = res.locals;
+  const { _id } = metadata;
+  console.log("initialize single upsert");
+  console.log("METADATA TO UPSERT", metadata.metadata);
+
+  await index.upsert([
+    {
+      id: _id,
+      values: embedding,
+      metadata: {
+        ...metadata.metadata,
+        generatedStory: generatedStory,
+      },
+    },
+  ]);
+
+  console.log("UPSERT COMPLETE ");
+  return next();
+};
+
+  // const realAzzMetadata: EmbeddingData = {
+  //   story: metadata,
+  //   embedding,
+  // };
+
+//   //TODO: Fix this in order to upsert embedded books vvv
+//   /**
+//    * Generate Pinecone records from embeddings data.
+//    */
   const generatePineconeRecords = (
     embeddingsData: EmbeddingData[],
   ): PineconeRecord<StoryMetadata>[] => {
@@ -44,10 +64,10 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
     return pineconeRecords;
   };
 
-  /**
-   * Create batches of Pinecone records for upserting.
-   * Refer to the Pinecone documentation: https://docs.pinecone.io/guides/data/upsert-data
-   */
+//   /**
+//    * Create batches of Pinecone records for upserting.
+//    * Refer to the Pinecone documentation: https://docs.pinecone.io/guides/data/upsert-data
+//    */
   const createPineconeBatches = (
     vectors: PineconeRecord<StoryMetadata>[],
     batchSize = 200,
@@ -61,11 +81,11 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
     return batches;
   };
 
-  /**
-   * Upsert batches of Pinecone records to Pinecone.
-   * Provide logging for each batch you try to, including the IDs of the first and last records in the batch.
-   * Log the success or failure of each batch upsert.
-   */
+//   /**
+//    * Upsert batches of Pinecone records to Pinecone.
+//    * Provide logging for each batch you try to, including the IDs of the first and last records in the batch.
+//    * Log the success or failure of each batch upsert.
+//    */
   const upsertBatchesToPicone = async (
     pineconeBatches: PineconeRecord<StoryMetadata>[][],
   ): Promise<void> => {
@@ -96,40 +116,38 @@ export const upsertDataToPinecone: RequestHandler = async (_req, res, next) => {
     });
   };
 
-  const main = async (): Promise<void> => {
-    // TODO: generatePineconeRecords needs embeddings data to function. will probably be res.locals data.
-    const pineconeRecords = generatePineconeRecords([realAzzMetadata]);
-    const pineconeBatches = createPineconeBatches(pineconeRecords);
-    upsertBatchesToPicone(pineconeBatches);
-  };
+  // const main = async (): Promise<void> => {
+  //   // TODO: generatePineconeRecords needs embeddings data to function. will probably be res.locals data.
+  //   const pineconeRecords = generatePineconeRecords([realAzzMetadata]);
+  //   const pineconeBatches = createPineconeBatches(pineconeRecords);
+  //   upsertBatchesToPicone(pineconeBatches);
+  // };
 
-  main().catch((error) => {
-    console.error("An error occurred in main:", error);
-    process.exit(1);
-  });
-};
+  // main().catch((error) => {
+  //   console.error("An error occurred in main:", error);
+  //   process.exit(1);
+  // });
+
 
 export const getAllBooks: RequestHandler = async (_req, res, next) => {
-
   const index = pc.index("stories");
 
   // list as pages of book results vvv
   const results = await index.listPaginated();
 
-  console.log('List of all books: ', results.vectors);
+  console.log("List of all books: ", results.vectors);
 
   // you can turn to next page of book results vvv
   // await index.listPaginated({prefix: 'dox1#', paginationToken: results.pagination.next});
 
   res.locals.allBooks = results;
   return next();
-}
-
+};
 
 //fetch from pinecone by element id for the bookshelf
 export const queryPineconeById: RequestHandler = async (req, res, next) => {
-  const {bookID} = req.body;
-  const fakeId = '1234'
+  const { bookID } = req.body;
+  const fakeId = "1234";
   // To get the unique host for an index,
   // see https://docs.pinecone.io/guides/data/target-an-index
   const index = pc.index("stories");
@@ -138,8 +156,8 @@ export const queryPineconeById: RequestHandler = async (req, res, next) => {
     // .namespace("example-namespace")
     .fetch([fakeId]);
 
-  res.locals.idBooks = fetchResult
-  console.log('Fetch Book by id:', fetchResult);
+  res.locals.idBooks = fetchResult;
+  console.log("Fetch Book by id:", fetchResult);
   return next();
 };
 

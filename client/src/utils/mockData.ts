@@ -1,13 +1,12 @@
-import chihiroImg from '../assets/protags/protag3.jpeg'; // Adjust the path as necessary
-import noFaceImg from '../assets/protags/protag1.jpeg'; // Adjust the path as necessary
-
+const chihiroImg = "/assets/protags/protag3.jpeg";
+const noFaceImg = "/assets/protags/protag1.jpeg";
 
 export const mockBookForPostRequest = {
   title: "Spirited Away",
   author: "Hayao Miyazaki",
   setting: "Spirit World", // Updated to reflect the film's setting
   plot: "A young girl, Chihiro, must navigate the Spirit World to save her parents from a curse.",
-  characters: [41,42,43],
+  characters: ["Chihiro", "No-Face", "Haku", "Yubaba"],
   artStyle: "Anime",
   genre: "Fantasy",
 };
@@ -72,7 +71,7 @@ export const mockCharactersFromGetRequest = [
     age: 10,
     pronouns: "she/her",
     species: "Human",
-    profileImg: chihiroImg, 
+    profileImg: chihiroImg,
   },
   {
     id: 42,
@@ -80,7 +79,10 @@ export const mockCharactersFromGetRequest = [
     age: "Unknown",
     pronouns: "they/them",
     species: "Unknown",
-    profileImg: noFaceImg, 
-
+    profileImg: noFaceImg,
   },
+];
+
+export const mockGeneratedStory: string[] = [
+  // ... existing code ...
 ];

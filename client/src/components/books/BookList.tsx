@@ -7,15 +7,22 @@ const BookList = () => {
   const { state } = useGlobalContext();
 
   const { bookList } = state;
-  // console.log('BookList:', bookList);
+  console.log("BookList:", bookList);
 
   return (
     <>
-      {/* <h3>--BOOK LIST--</h3> */}
       <div className="book-list-wrapper">
         {bookList &&
-          bookList.map((book) => {
-            return <Book key={book.id} title={book.title} />;
+          bookList.map((book, index) => {
+            const { _id, metadata, generatedStory, coverImgUrl } = book;
+            return (
+              <Book
+                key={index}
+                title={metadata.title}
+                coverImg={coverImgUrl}
+                storyText={generatedStory}
+              />
+            );
           })}
       </div>
     </>

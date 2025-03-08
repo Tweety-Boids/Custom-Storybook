@@ -1,13 +1,13 @@
 export type ServerError = {
-    log: string;
-    status: number;
-    message: { err: string };};
-
+  log: string;
+  status: number;
+  message: { err: string };
+};
 
 export type ServerApi = {
-    version: "1";
-    strict: boolean;
-    deprecationErrors: boolean;
+  version: "1";
+  strict: boolean;
+  deprecationErrors: boolean;
 };
 
 export interface UserPreferenceBody {
@@ -30,12 +30,22 @@ export interface Characters {
   physical_description: string;
 }
 
-
 export type StoryMetadata = {
   id: string;
   title: string;
-  story: string;
-  characters: string[];
-  genre: string;
   author: string;
+  setting: string;
+  plot: string;
+  characters: string[];
+  artStyle: string;
+  genre: string;
+  story: string[];
 };
+
+export interface Images {
+  name: string;
+  img: {
+    data: Buffer;
+    contentType: string;
+  };
+}
